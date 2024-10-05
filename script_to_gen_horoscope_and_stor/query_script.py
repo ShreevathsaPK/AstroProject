@@ -96,7 +96,7 @@ def main():
     for result in results:
         print(result[1])
     '''
-    # Close the connection
+    # Close the connection.
     conn.close()
 
 if __name__ == "__main__":
