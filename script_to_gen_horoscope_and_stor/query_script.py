@@ -11,13 +11,13 @@ def query_planet_by_house_or_sign(conn, planet, house=None, sign=None):
     
     if house:
         cursor.execute('''
-            SELECT personal_info.*, planet_data.* 
+            SELECT DISTINCT personal_info.*, planet_data.* 
             FROM personal_info 
             JOIN planet_data ON personal_info.id = planet_data.personal_info_id 
             WHERE planet_data.planet = ? AND planet_data.house = ?''', (planet, house))
     elif sign:
         cursor.execute('''
-            SELECT personal_info.*, planet_data.* 
+            SELECT DISTINCT personal_info.*, planet_data.* 
             FROM personal_info 
             JOIN planet_data ON personal_info.id = planet_data.personal_info_id 
             WHERE planet_data.planet = ? AND planet_data.sign = ?''', (planet, sign))
@@ -47,7 +47,7 @@ def query_planets_in_same_sign_or_house(conn, planets, house=None, sign=None):
     if sign:
         placeholders = ', '.join('?' for _ in planets)
         query = '''
-            SELECT personal_info.*, planet_data.* 
+            SELECT DISTINCT personal_info.*, planet_data.* 
             FROM personal_info 
             JOIN planet_data ON personal_info.id = planet_data.personal_info_id 
             WHERE planet_data.planet IN ({}) AND planet_data.sign = ?'''.format(placeholders)
@@ -55,7 +55,7 @@ def query_planets_in_same_sign_or_house(conn, planets, house=None, sign=None):
     elif house:
         placeholders = ', '.join('?' for _ in planets)
         query = '''
-            SELECT personal_info.*, planet_data.* 
+            SELECT DISTINCT personal_info.*, planet_data.* 
             FROM personal_info 
             JOIN planet_data ON personal_info.id = planet_data.personal_info_id 
             WHERE planet_data.planet IN ({}) AND planet_data.house = ?'''.format(placeholders)
