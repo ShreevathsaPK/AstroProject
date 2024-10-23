@@ -74,8 +74,14 @@ def main():
     # Query 1: Planet with House or Sign
     planet = raw_input('Enter the Planet')
     house = input('Enter the house')
+    zodiac = raw_input('Enter the Zodiac')
     print("Query 1: Results for {} in house {}".format(planet, house))
     results = query_planet_by_house_or_sign(conn, planet, house=house)
+    for result in results:
+        print(result[1])
+
+    print("Query 3: Results for {} in house {}".format(planet, zodiac))
+    results = query_planet_by_house_or_sign(conn, planet, sign=zodiac)
     for result in results:
         print(result[1])
     
