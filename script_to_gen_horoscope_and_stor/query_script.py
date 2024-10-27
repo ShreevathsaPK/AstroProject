@@ -131,7 +131,7 @@ def query_xth_lord_in_yth_house(conn, xth_house, yth_house):
 def main():
     # Connect to the database
     conn = create_connection('horoscope.db')
-    '''
+
     # Query 1: Planet with House or Sign
     planet = raw_input('Enter the Planet: ')
     house = input('Enter the House: ')
@@ -153,7 +153,7 @@ def main():
     results = query_planet_by_retrograde(conn, planet, retro_status)
     for result in results:
         print(result[1])
-    '''
+
     # Query 4: Identify xth lord in yth house
     xth_house = int(input('Enter the xth House: '))
     yth_house = int(input('Enter the yth House: '))
