@@ -2,9 +2,10 @@ import sqlite3
 
 # Array of zodiac signs and their respective house lords
 zodiac_owners = {
-    'Aries': 'Mars', 'Taurus': 'Venus', 'Gemini': 'Mercury', 'Cancer': 'Moon',
-    'Leo': 'Sun', 'Virgo': 'Mercury', 'Libra': 'Venus', 'Scorpio': 'Mars',
-    'Sagittarius': 'Jupiter', 'Capricorn': 'Saturn', 'Aquarius': 'Saturn', 'Pisces': 'Jupiter'
+    'Aries': ['Mars'], 'Taurus': ['Venus'], 'Gemini': ['Mercury'], 'Cancer': ['Moon'],
+    'Leo': ['Sun'], 'Virgo': ['Mercury'], 'Libra': ['Venus'], 'Scorpio': ['Mars', 'Ketu'],
+    'Sagittarius': ['Jupiter'], 'Capricorn': ['Saturn'], 'Aquarius': ['Saturn', 'Rahu'],
+    'Pisces': ['Jupiter']
 }
 
 def create_connection(db_file):
@@ -75,56 +76,36 @@ def query_planets_in_same_sign_or_house(conn, planets, house=None, sign=None):
     return results
 
 # Query 4: Identify lord of xth house and check if it sits in the yth house
+# Modify the function to handle multiple lords for xth house sign
 def query_xth_lord_in_yth_house(conn, xth_house, yth_house):
     cursor = conn.cursor()
-
-    # Fetch all entries with personal info and ascendant details
-    cursor.execute('''
-        SELECT personal_info.*, planet_data.* 
-        FROM personal_info 
-        JOIN planet_data ON personal_info.id = planet_data.personal_info_id
-        WHERE planet_data.planet = 'Ascendant' 
-    ''')
-
-    entries = cursor.fetchall()
-
-    # Zodiac list in circular order
     zodiac_list = ['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo',
                    'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces']
 
     results = []
+    cursor.execute('''SELECT personal_info.*, planet_data.* 
+                      FROM personal_info 
+                      JOIN planet_data ON personal_info.id = planet_data.personal_info_id
+                      WHERE planet_data.planet = 'Ascendant' ''')
 
-    # Traverse through each entry, calculate xth house lord, and check its position
+    entries = cursor.fetchall()
     for entry in entries:
-        ascendant = entry[14]  # Assuming 'sign' column (index 14) stores ascendant sign in planet_data table
-        print("Ascendant sign: {}".format(ascendant))  # Debug print
-        try:
-            ascendant_index = zodiac_list.index(ascendant)
-        except ValueError:
-            print("Error: Ascendant {} not found in zodiac list.".format(ascendant))
-            continue  # Skip this entry if ascendant sign is invalid
+        ascendant = entry[14]
+        ascendant_index = zodiac_list.index(ascendant)
 
-        # Calculate the xth house in circular fashion from the ascendant
-        xth_house_index = (ascendant_index + (xth_house - 1)) % 12  # Adjusting indexing
-        xth_house_lord = zodiac_owners[zodiac_list[xth_house_index]]
+        xth_house_index = (ascendant_index + (xth_house - 1)) % 12
+        xth_house_lords = zodiac_owners[zodiac_list[xth_house_index]]
 
-        print("Checking if lord of {}th house ({}) is in {}th house.".format(xth_house,xth_house_lord,yth_house))  # Debug print
+        for xth_house_lord in xth_house_lords:
+            cursor.execute('''SELECT personal_info.*, planet_data.* 
+                              FROM personal_info 
+                              JOIN planet_data ON personal_info.id = planet_data.personal_info_id 
+                              WHERE planet_data.planet = ? AND planet_data.house = ? 
+                              AND personal_info.id = ?''', (xth_house_lord, yth_house, entry[0]))
 
-        # Query to check if the xth house lord is sitting in the yth house
-        cursor.execute('''
-            SELECT  personal_info.*, planet_data.* 
-            FROM personal_info 
-            JOIN planet_data ON personal_info.id = planet_data.personal_info_id 
-            WHERE planet_data.planet = ? AND planet_data.house = ? AND personal_info.id = ?''', (xth_house_lord, yth_house,entry[0]))
-
-        lord_results = cursor.fetchall()
-
-        # Only append if there are results for this lord in the yth house
-        if lord_results:
-            print("Match found for {} in {}th house.".format(xth_house_lord,yth_house))  # Debug print
-            results.extend(lord_results)
-        else:
-            print("No match for {} in {}th house.".format(xth_house_lord,yth_house))  # Debug print
+            lord_results = cursor.fetchall()
+            if lord_results:
+                results.extend(lord_results)
 
     return results
 
