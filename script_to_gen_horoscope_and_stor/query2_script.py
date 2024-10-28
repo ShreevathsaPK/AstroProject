@@ -1,5 +1,6 @@
 import sqlite3
 
+
 # Array of zodiac signs and their respective house lords
 zodiac_owners = {
     'Aries': 'Mars', 'Taurus': 'Venus', 'Gemini': 'Mercury', 'Cancer': 'Moon',
@@ -12,7 +13,7 @@ def create_connection(db_file):
     conn = sqlite3.connect(db_file)
     return conn
 
-# Query 1: Search by Planet and House or Sign with Personal Info
+# Query 1: Search by Planet and House or Sign with Personal Info.
 def query_planet_by_house_or_sign(conn, planet, nakshatra, sign=None):
     cursor = conn.cursor()
 
@@ -39,9 +40,10 @@ def main():
     # Connect to the database
     conn = create_connection('horoscope.db')
 
+    
     # Query 1: Planet with House or Sign
-    planet = raw_input('Enter the Planet: ')
-    nakshatra = raw_input('Enter the Nakshatra: ')
+    planet = input('Enter the Planet: ')
+    nakshatra = input('Enter the Nakshatra: ')
     print("Query 1: Results for {} in house {}".format(planet, nakshatra))
     results = query_planet_by_house_or_sign(conn, planet, nakshatra=nakshatra)
     for result in results:
