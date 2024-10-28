@@ -133,9 +133,9 @@ def main():
     conn = create_connection('horoscope.db')
 
     # Query 1: Planet with House or Sign
-    planet = raw_input('Enter the Planet: ')
+    planet = input('Enter the Planet: ')
     house = input('Enter the House: ')
-    zodiac = raw_input('Enter the Zodiac: ')
+    zodiac = input('Enter the Zodiac: ')
     print("Query 1: Results for {} in house {}".format(planet, house))
     results = query_planet_by_house_or_sign(conn, planet, house=house)
     for result in results:
@@ -147,7 +147,7 @@ def main():
         print(result[1])
 
     # Query 2: Planet with Retrograde Status
-    planet = raw_input('Enter the Planet for Retro: ')
+    planet = input('Enter the Planet for Retro: ')
     retro_status = 'Retro'
     print("\nQuery 2: Results for {} with retrograde status {}".format(planet, retro_status))
     results = query_planet_by_retrograde(conn, planet, retro_status)
