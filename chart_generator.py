@@ -1,49 +1,115 @@
 import swisseph as swe
+import datetime
 
-# Set the path to Swiss Ephemeris files
-swe.set_ephe_path('/workspaces/AstroProject/swisseph/')  # Adjust the path based on your setup
+# Set the path for the Swiss Ephemeris files
+swe.set_ephe_path('/path_to_ephemeris_files/')
 
-def calculate_planets(dob, tob, lat, lon):
-    # Convert date and time to Julian Day
-    year, month, day = map(int, dob.split('-'))
-    hour, minute, second = map(int, tob.split(':'))
-    
-    # Calculate Julian Day
-    jd = swe.julday(year, month, day, hour + minute / 60 + second / 3600)
+# Set sidereal mode with Lahiri Ayanamsha for Vedic astrology
+swe.set_sid_mode(swe.SIDM_LAHIRI)
 
-    # Get the planetary positions
-    planets = range(0, 10)  # 0 to 9 for Sun to Pluto
-    positions = []
+def calculate_planet_positions(jd):
+    """Calculate positions for planets, their signs, degrees, retrograde status, and more."""
+    planets_data = []
+
+    # Planets to include (using Swiss Ephemeris constants)
+    planets = [swe.SUN, swe.MOON, swe.MERCURY, swe.VENUS, swe.MARS,
+               swe.JUPITER, swe.SATURN, swe.URANUS, swe.NEPTUNE, swe.PLUTO, swe.MEAN_NODE, swe.TRUE_NODE]
+
     for planet in planets:
-        ret, pos = swe.calc(jd, planet)
-        positions.append(pos)
+        # Get planet data with sidereal flag applied
+        planet_info = swe.calc_ut(jd, planet, swe.FLG_SIDEREAL)
+        degree = planet_info[0][0]  # Longitude in sidereal degrees
+        
+        if swe.get_planet_name(planet)=="true Node":
+            degree = (degree + 180) % 360
+        # Check retrograde status if the tuple has sufficient length
+        retrograde = "Direct"
+        if len(planet_info) > 3 and planet_info[3] < 0:
+            retrograde = "Retro"
 
-    # Placeholder data for the example output (these should be computed)
-    output_data = [
-        ['Ascendant', 'Pisces', 'Jupiter', 'Purva Bhadrapada', 'Jupiter', '1°52′3″', 'Direct', 'No', '--', 1, '--'],
-        ['Sun', 'Aries', 'Mars', 'Bharani', 'Venus', '24°58′10″', 'Direct', 'No', 'Mrita', 2, 'Exalted'],
-        ['Moon', 'Aquarius', 'Saturn', 'Shatabhisha', 'Rahu', '9°5′36″', 'Direct', 'No', 'Kumara', 12, 'Enemy'],
-        ['Mercury', 'Aries', 'Mars', 'Ashwini', 'Ketu', '7°57′49″', 'Direct', 'No', 'Kumara', 2, 'Enemy'],
-        ['Venus', 'Gemini', 'Mercury', 'Aadra', 'Rahu', '7°30′27″', 'Direct', 'No', 'Kumara', 4, 'Friendly'],
-        ['Mars', 'Libra', 'Venus', 'Chitra', 'Mars', '4°49′34″', 'Retro', 'No', 'Bala', 8, 'Friendly'],
-        ['Jupiter', 'Pisces', 'Jupiter', 'Revati', 'Mercury', '26°22′39″', 'Direct', 'No', 'Bala', 1, 'Owned'],
-        ['Saturn', 'Aries', 'Mars', 'Bharani', 'Venus', '14°29′35″', 'Direct', 'Yes', 'Yuva', 2, 'Enemy'],
-        ['Rahu', 'Cancer', 'Moon', 'Ashlesha', 'Mercury', '23°43′31″', 'Retro', 'No', 'Kumara', 5, '--'],
-        ['Ketu', 'Capricorn', 'Saturn', 'Dhanishta', 'Mars', '23°43′31″', 'Retro', 'No', 'Kumara', 11, '--'],
-        ['Neptune', 'Capricorn', 'Saturn', 'Shravana', 'Moon', '10°31′18″', 'Direct', 'No', 'Vriddha', 11, '--'],
-        ['Uranus', 'Capricorn', 'Saturn', 'Shravana', 'Moon', '22°53′20″', 'Direct', 'No', 'Kumara', 11, '--'],
-        ['Pluto', 'Scorpio', 'Mars', 'Anuradha', 'Saturn', '15°50′41″', 'Direct', 'No', 'Yuva', 9, '--']
+        # Calculate sign
+        sign, sign_lord = get_sign_and_lord(degree)
+
+        # Nakshatra and its lord
+        nakshatra, naksh_lord = get_nakshatra(degree)
+
+        # Combust and Avastha (example placeholder values)
+        combust = "No"
+        avastha = "Yuva"  # Default example; you may add specific calculations for avastha
+
+        # Determine the house (placeholder calculation)
+        house = (int(degree / 30) + 1) % 12
+
+        # Status placeholder
+        status = "--"  # Adjust as needed based on specific conditions
+
+        planets_data.append({
+            "Planet": "Rahu"if swe.get_planet_name(planet)=="mean Node" else ( "Ketu" if swe.get_planet_name(planet)=="true Node" else swe.get_planet_name(planet)),
+            "Sign": sign,
+            "Sign Lord": sign_lord,
+            "Nakshatra": nakshatra,
+            "Naksh Lord": naksh_lord,
+            "Degree": degree,
+            "Retro": retrograde,
+            "Combust": combust,
+            "Avastha": avastha,
+            "House": house,
+            "Status": status
+        })
+
+    return planets_data
+
+def get_sign_and_lord(degree):
+    """Determine sign and its lord based on degree."""
+    signs = [
+        ("Aries", "Mars"), ("Taurus", "Venus"), ("Gemini", "Mercury"), ("Cancer", "Moon"),
+        ("Leo", "Sun"), ("Virgo", "Mercury"), ("Libra", "Venus"), ("Scorpio", "Mars"),
+        ("Sagittarius", "Jupiter"), ("Capricorn", "Saturn"), ("Aquarius", "Saturn"), ("Pisces", "Jupiter")
     ]
+    sign_index = int(degree / 30)
+    return signs[sign_index]
 
-    # Print the results in a formatted table
-    print(f"{'Planet':<10}{'Sign':<10}{'Sign Lord':<12}{'Nakshatra':<15}{'Naksh Lord':<12}{'Degree':<10}{'Retro':<8}{'Combust':<8}{'Avastha':<10}{'House':<8}{'Status':<8}")
-    for data in output_data:
-        print(f"{data[0]:<10}{data[1]:<10}{data[2]:<12}{data[3]:<15}{data[4]:<12}{data[5]:<10}{data[6]:<8}{data[7]:<8}{data[8]:<10}{data[9]:<8}{data[10]:<8}")
+def get_nakshatra(degree):
+    """Determine the nakshatra and its lord based on degree."""
+    nakshatras = [
+        ("Ashwini", "Ketu"), ("Bharani", "Venus"), ("Krittika", "Sun"),
+        ("Rohini", "Moon"), ("Mrigashira", "Mars"), ("Ardra", "Rahu"),
+        ("Punarvasu", "Jupiter"), ("Pushya", "Saturn"), ("Ashlesha", "Mercury"),
+        ("Magha", "Ketu"), ("Purva Phalguni", "Venus"), ("Uttara Phalguni", "Sun"),
+        ("Hasta", "Moon"), ("Chitra", "Mars"), ("Swati", "Rahu"),
+        ("Vishakha", "Jupiter"), ("Anuradha", "Saturn"), ("Jyeshtha", "Mercury"),
+        ("Moola", "Ketu"), ("Purva Ashadha", "Venus"), ("Uttara Ashadha", "Sun"),
+        ("Shravana", "Moon"), ("Dhanishta", "Mars"), ("Shatabhisha", "Rahu"),
+        ("Purva Bhadrapada", "Jupiter"), ("Uttara Bhadrapada", "Saturn"), ("Revati", "Mercury")
+    ]
+    index = int((degree % 360) // (360 / 27)) % 27  # Ensure index stays within bounds
+    return nakshatras[index]
+
+def calculate_julian_day(year, month, day, hour, minute, second):
+    """Calculate Julian Day from date and time."""
+    return swe.julday(year, month, day, hour + (minute / 60) + (second / 3600))
+
+def main():
+    # Input for date and time of birth
+    date_of_birth = input("Enter Date of Birth (YYYY-MM-DD): ")
+    time_of_birth = input("Enter Time of Birth (HH:MM:SS): ")
+    latitude = float(input("Enter Place of Birth Latitude: "))
+    longitude = float(input("Enter Place of Birth Longitude: "))
+
+    # Parse date and time
+    dob = datetime.datetime.strptime(date_of_birth, "%Y-%m-%d")
+    tob = datetime.datetime.strptime(time_of_birth, "%H:%M:%S")
+
+    # Calculate Julian Day for the given date and time
+    jd = calculate_julian_day(dob.year, dob.month, dob.day, tob.hour, tob.minute, tob.second)
+
+    # Calculate planetary data
+    planetary_data = calculate_planet_positions(jd)
+
+    # Display the results
+    print(f"{'Planet':<10}{'Sign':<10}{'Sign Lord':<10}{'Nakshatra':<15}{'Naksh Lord':<10}{'Degree':<10}{'Retro':<10}{'Combust':<10}{'Avastha':<10}{'House':<10}{'Status':<10}")
+    for data in planetary_data:
+        print(f"{data['Planet']:<10}{data['Sign']:<10}{data['Sign Lord']:<10}{data['Nakshatra']:<15}{data['Naksh Lord']:<10}{data['Degree']:<10.2f}{data['Retro']:<10}{data['Combust']:<10}{data['Avastha']:<10}{data['House']:<10}{data['Status']:<10}")
 
 if __name__ == "__main__":
-    dob = input("Enter Date of Birth (YYYY-MM-DD): ")
-    tob = input("Enter Time of Birth (HH:MM:SS): ")
-    lat = float(input("Enter Place of Birth Latitude: "))
-    lon = float(input("Enter Place of Birth Longitude: "))
-
-    calculate_planets(dob, tob, lat, lon)
+    main()
