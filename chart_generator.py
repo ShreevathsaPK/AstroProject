@@ -1,27 +1,33 @@
 import swisseph as swe
 import datetime
+import os
+import pytz
+
+os.environ['SWISSEPH_DIR'] = '/workspace/AstroProject/'
 
 # Set the path for the Swiss Ephemeris files
-swe.set_ephe_path('/path_to_ephemeris_files/')
+swe.set_ephe_path('/workspace/AstroProject/')
 
 # Set sidereal mode with Lahiri Ayanamsha for Vedic astrology
 swe.set_sid_mode(swe.SIDM_LAHIRI)
 
-def calculate_planet_positions(jd):
+def calculate_planet_positions(jd, ascendant_degree):
     """Calculate positions for planets, their signs, degrees, retrograde status, and more."""
     planets_data = []
 
     # Planets to include (using Swiss Ephemeris constants)
-    planets = [swe.SUN, swe.MOON, swe.MERCURY, swe.VENUS, swe.MARS,
+    planets = [ swe.SUN, swe.MOON, swe.MERCURY, swe.VENUS, swe.MARS,
                swe.JUPITER, swe.SATURN, swe.URANUS, swe.NEPTUNE, swe.PLUTO, swe.MEAN_NODE, swe.TRUE_NODE]
-
+    print(planets)
     for planet in planets:
         # Get planet data with sidereal flag applied
         planet_info = swe.calc_ut(jd, planet, swe.FLG_SIDEREAL)
         degree = planet_info[0][0]  # Longitude in sidereal degrees
-        
-        if swe.get_planet_name(planet)=="true Node":
+
+        # Adjust degree for Rahu (mean node) and Ketu (true node)
+        if swe.get_planet_name(planet) == "true Node":
             degree = (degree + 180) % 360
+
         # Check retrograde status if the tuple has sufficient length
         retrograde = "Direct"
         if len(planet_info) > 3 and planet_info[3] < 0:
@@ -37,14 +43,15 @@ def calculate_planet_positions(jd):
         combust = "No"
         avastha = "Yuva"  # Default example; you may add specific calculations for avastha
 
-        # Determine the house (placeholder calculation)
-        house = (int(degree / 30) + 1) % 12
+        # Determine the house relative to the Ascendant
+        house = ((int((degree - ascendant_degree) / 30) + 1) % 12) + 1
 
         # Status placeholder
         status = "--"  # Adjust as needed based on specific conditions
 
         planets_data.append({
-            "Planet": "Rahu"if swe.get_planet_name(planet)=="mean Node" else ( "Ketu" if swe.get_planet_name(planet)=="true Node" else swe.get_planet_name(planet)),
+            "Planet": "Rahu" if swe.get_planet_name(planet) == "mean Node" else (
+                "Ketu" if swe.get_planet_name(planet) == "true Node" else swe.get_planet_name(planet)),
             "Sign": sign,
             "Sign Lord": sign_lord,
             "Nakshatra": nakshatra,
@@ -58,6 +65,26 @@ def calculate_planet_positions(jd):
         })
 
     return planets_data
+
+def calculate_ascendant(jd, latitude, longitude):
+    """Calculate the sidereal Ascendant (Lagna) using Swiss Ephemeris and Lahiri Ayanamsha."""
+    # Set sidereal mode to use Lahiri Ayanamsha
+    swe.set_sid_mode(swe.SIDM_LAHIRI)
+
+    # Calculate houses and cusps in tropical, then adjust for sidereal
+    houses_info, ascendant_cusps = swe.houses(jd, latitude, longitude, b'S')  # 'A' for Placidus
+    print("house info : {} asc cusps : {}".format(houses_info,ascendant_cusps))
+    # First cusp (Ascendant) in tropical coordinates
+    ascendant_tropical = ascendant_cusps[0]
+
+    # Convert tropical to sidereal by adjusting with ayanamsha
+    ayanamsha = swe.get_ayanamsa(jd)
+    print("ayanamsha: {}".format(ayanamsha))
+    sidereal_ascendant = (ascendant_tropical - ayanamsha  ) % 360
+
+    return sidereal_ascendant
+
+
 
 def get_sign_and_lord(degree):
     """Determine sign and its lord based on degree."""
@@ -100,14 +127,31 @@ def main():
     dob = datetime.datetime.strptime(date_of_birth, "%Y-%m-%d")
     tob = datetime.datetime.strptime(time_of_birth, "%H:%M:%S")
 
+    # Define the local timezone (replace 'Asia/Kolkata' with your actual local timezone)
+    local_tz = pytz.timezone('Asia/Kolkata')
+    local_dt = local_tz.localize(datetime.datetime.combine(dob, tob.time()))
+
+    # Convert to UTC
+    utc_dt = local_dt.astimezone(pytz.utc)
+
+    # Calculate Julian Day in UTC
+    jd = calculate_julian_day(utc_dt.year, utc_dt.month, utc_dt.day, utc_dt.hour, utc_dt.minute, utc_dt.second)
+
     # Calculate Julian Day for the given date and time
-    jd = calculate_julian_day(dob.year, dob.month, dob.day, tob.hour, tob.minute, tob.second)
+    #jd = calculate_julian_day(dob.year, dob.month, dob.day, tob.hour, tob.minute, tob.second)
+
+    # Calculate Ascendant
+    ascendant_degree = calculate_ascendant(jd, latitude, longitude)
+    asc_sign, asc_lord = get_sign_and_lord(ascendant_degree)
+
+    # Display Ascendant information
+    print(f"{'Planet':<10}{'Sign':<10}{'Sign Lord':<10}{'Nakshatra':<15}{'Naksh Lord':<10}{'Degree':<10}{'Retro':<10}{'Combust':<10}{'Avastha':<10}{'House':<10}{'Status':<10}")
+    print(f"{'Ascendant':<10}{asc_sign:<10}{asc_lord:<10}{'--':<15}{'--':<10}{ascendant_degree:<10.2f}{'--':<10}{'--':<10}{'--':<10}{'1':<10}{'--':<10}")
 
     # Calculate planetary data
-    planetary_data = calculate_planet_positions(jd)
+    planetary_data = calculate_planet_positions(jd, ascendant_degree)
 
-    # Display the results
-    print(f"{'Planet':<10}{'Sign':<10}{'Sign Lord':<10}{'Nakshatra':<15}{'Naksh Lord':<10}{'Degree':<10}{'Retro':<10}{'Combust':<10}{'Avastha':<10}{'House':<10}{'Status':<10}")
+    # Display planetary information
     for data in planetary_data:
         print(f"{data['Planet']:<10}{data['Sign']:<10}{data['Sign Lord']:<10}{data['Nakshatra']:<15}{data['Naksh Lord']:<10}{data['Degree']:<10.2f}{data['Retro']:<10}{data['Combust']:<10}{data['Avastha']:<10}{data['House']:<10}{data['Status']:<10}")
 
