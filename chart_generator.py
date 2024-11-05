@@ -18,10 +18,9 @@ def calculate_planet_positions(jd, ascendant_degree):
     # Planets to include (using Swiss Ephemeris constants)
     planets = [ swe.SUN, swe.MOON, swe.MERCURY, swe.VENUS, swe.MARS,
                swe.JUPITER, swe.SATURN, swe.URANUS, swe.NEPTUNE, swe.PLUTO, swe.MEAN_NODE, swe.TRUE_NODE]
-    print(planets)
     for planet in planets:
         # Get planet data with sidereal flag applied
-        planet_info = swe.calc_ut(jd, planet, swe.FLG_SIDEREAL)
+        planet_info = swe.calc_ut(jd, planet, swe.FLG_SIDEREAL | swe.FLG_SPEED)
         degree = planet_info[0][0]  # Longitude in sidereal degrees
 
         # Adjust degree for Rahu (mean node) and Ketu (true node)
@@ -30,7 +29,7 @@ def calculate_planet_positions(jd, ascendant_degree):
 
         # Check retrograde status if the tuple has sufficient length
         retrograde = "Direct"
-        if len(planet_info) > 3 and planet_info[3] < 0:
+        if  planet_info[0][3] < 0:
             retrograde = "Retro"
 
         # Calculate sign
@@ -44,7 +43,7 @@ def calculate_planet_positions(jd, ascendant_degree):
         avastha = "Yuva"  # Default example; you may add specific calculations for avastha
 
         # Determine the house relative to the Ascendant
-        house = ((int((degree - ascendant_degree) / 30) + 1) % 12) + 1
+        house = ((int((degree - ascendant_degree) / 30) - 1) % 12) + 1
 
         # Status placeholder
         status = "--"  # Adjust as needed based on specific conditions
@@ -73,13 +72,13 @@ def calculate_ascendant(jd, latitude, longitude):
 
     # Calculate houses and cusps in tropical, then adjust for sidereal
     houses_info, ascendant_cusps = swe.houses(jd, latitude, longitude, b'S')  # 'A' for Placidus
-    print("house info : {} asc cusps : {}".format(houses_info,ascendant_cusps))
+    
     # First cusp (Ascendant) in tropical coordinates
     ascendant_tropical = ascendant_cusps[0]
 
     # Convert tropical to sidereal by adjusting with ayanamsha
     ayanamsha = swe.get_ayanamsa(jd)
-    print("ayanamsha: {}".format(ayanamsha))
+    
     sidereal_ascendant = (ascendant_tropical - ayanamsha  ) % 360
 
     return sidereal_ascendant
@@ -146,14 +145,14 @@ def main():
 
     # Display Ascendant information
     print(f"{'Planet':<10}{'Sign':<10}{'Sign Lord':<10}{'Nakshatra':<15}{'Naksh Lord':<10}{'Degree':<10}{'Retro':<10}{'Combust':<10}{'Avastha':<10}{'House':<10}{'Status':<10}")
-    print(f"{'Ascendant':<10}{asc_sign:<10}{asc_lord:<10}{'--':<15}{'--':<10}{ascendant_degree:<10.2f}{'--':<10}{'--':<10}{'--':<10}{'1':<10}{'--':<10}")
+    print(f"{'Ascendant':<10}{asc_sign:<10}{asc_lord:<10}{'--':<15}{'--':<10}{ascendant_degree%30:<10.2f}{'--':<10}{'--':<10}{'--':<10}{'1':<10}{'--':<10}")
 
     # Calculate planetary data
     planetary_data = calculate_planet_positions(jd, ascendant_degree)
 
     # Display planetary information
     for data in planetary_data:
-        print(f"{data['Planet']:<10}{data['Sign']:<10}{data['Sign Lord']:<10}{data['Nakshatra']:<15}{data['Naksh Lord']:<10}{data['Degree']:<10.2f}{data['Retro']:<10}{data['Combust']:<10}{data['Avastha']:<10}{data['House']:<10}{data['Status']:<10}")
+        print(f"{data['Planet']:<10}{data['Sign']:<10}{data['Sign Lord']:<10}{data['Nakshatra']:<15}{data['Naksh Lord']:<10}{data['Degree']%30:<10.2f}{data['Retro']:<10}{data['Combust']:<10}{data['Avastha']:<10}{data['House']:<10}{data['Status']:<10}")
 
 if __name__ == "__main__":
     main()
