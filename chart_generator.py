@@ -11,6 +11,23 @@ swe.set_ephe_path('/workspace/AstroProject/')
 # Set sidereal mode with Lahiri Ayanamsha for Vedic astrology
 swe.set_sid_mode(swe.SIDM_LAHIRI)
 
+# Calculate combust status
+def check_combust(planet, planet_degree, sun_degree):
+
+    combust_ranges = {
+            swe.MERCURY: 8,
+            swe.VENUS: 8,
+            swe.MARS: 7,
+            swe.JUPITER: 11,
+            swe.SATURN: 15,
+            swe.MOON: 12,
+        }
+    
+    if planet in combust_ranges:
+        if abs(planet_degree - sun_degree) <= combust_ranges[planet]:
+            return "Combust"
+    return "No"
+
 def calculate_planet_positions(jd, ascendant_degree):
     """Calculate positions for planets, their signs, degrees, retrograde status, and more."""
     planets_data = []
@@ -39,7 +56,14 @@ def calculate_planet_positions(jd, ascendant_degree):
         nakshatra, naksh_lord = get_nakshatra(degree)
 
         # Combust and Avastha (example placeholder values)
+        # Define combust ranges in degrees for each planet
+        
         combust = "No"
+
+        sun_info = swe.calc_ut(jd, swe.SUN, swe.FLG_SIDEREAL | swe.FLG_SPEED)
+        sun_degree = sun_info[0][0]  # Longitude in sidereal degrees
+        combust = check_combust(planet, degree, sun_degree)
+
         avastha = "Yuva"  # Default example; you may add specific calculations for avastha
 
         # Determine the house relative to the Ascendant
