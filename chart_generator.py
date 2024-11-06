@@ -234,7 +234,7 @@ def main():
     }
 
     # Convert to DataFrame to write into Excel
-    sheet1_df = pd.DataFrame(list(sheet1_data.items()), columns=["Key", "Value"])
+    sheet1_df = pd.DataFrame(list(sheet1_data.items()))
 
 
     # Prepare ascendant data for DataFrame
@@ -266,19 +266,22 @@ def main():
     
     # Write to Excel starting from the second row (index 1) with a custom header in the first row
     with pd.ExcelWriter("planetary_positions.xlsx", engine="openpyxl") as writer:
-        # Write the data for "Sheet 1"
-        sheet1_df.to_excel(writer, index=False, sheet_name="Sheet 1")
-        worksheet = writer.sheets['Sheet 1']
 
+       
+        # Write the data for "Sheet 1"
+        sheet1_df.to_excel(writer, index=False, sheet_name="Sheet 1",header=False)
+        worksheet = writer.sheets['Sheet 1']
+        # Merge cells across 6 columns for "Table 1"
+        worksheet.merge_cells(start_row=1, start_column=1, end_row=1, end_column=11)
+        worksheet.cell(row=1, column=1, value="Table 1") 
 
         # Create a new workbook and get the sheet
         df.to_excel(writer, index=False, sheet_name="Sheet 2")
 
         worksheet = writer.sheets['Sheet 2']
 
-         # Merge cells across 6 columns for "Table 1"
+        # Merge cells across 6 columns for "Table 1"
         worksheet.merge_cells(start_row=1, start_column=1, end_row=1, end_column=11)
-
         worksheet.cell(row=1, column=1, value="Table 1")
         
         # Write headers to the second row (index 1) explicitly (this will be from the DataFrame)
