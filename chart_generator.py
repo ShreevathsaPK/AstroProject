@@ -4,7 +4,7 @@ import os
 import pytz
 from geopy.geocoders import Nominatim
 from timezonefinder import TimezoneFinder
-
+import pandas as pd  # Import pandas to work with Excel files
 
 os.environ['SWISSEPH_DIR'] = '/workspace/AstroProject/'
 
@@ -189,6 +189,7 @@ def get_timezone(latitude, longitude):
 
 def main():
     # Input for date and time of birth
+    name = input("Enter name of the Person")
     date_of_birth = input("Enter Date of Birth (YYYY-MM-DD): ")
     time_of_birth = input("Enter Time of Birth (HH:MM:SS): ")
     location_name = input("Enter Place of Birth (City, Country): ")
@@ -218,12 +219,71 @@ def main():
     ascendant_degree = calculate_ascendant(jd, latitude, longitude)
     asc_sign, asc_lord = get_sign_and_lord(ascendant_degree)
 
+    # Information to be added to "Sheet 1"
+    sheet1_data = {
+        "Name": name,
+        "Date": dob.strftime("%d/%m/%Y"),
+        "Time": tob.strftime("%H:%M:%S"),
+        "Place": location_name,
+        "Latitude": latitude,
+        "Longitude": longitude,
+        "Timezone": "tobefilled GMT+5.5",
+        "Sunrise": "tobefilled",
+        "Sunset": "tobefilled",
+        "Ayanamsha": "tobefilled"
+    }
+
+    # Convert to DataFrame to write into Excel
+    sheet1_df = pd.DataFrame(list(sheet1_data.items()), columns=["Key", "Value"])
+
+
+    # Prepare ascendant data for DataFrame
+    ascendant_data = [{
+        "Planet": "Ascendant",
+        "Sign": asc_sign,
+        "Sign Lord": asc_lord,
+        "Nakshatra": "--",
+        "Naksh Lord": "--",
+        "Degree": ascendant_degree % 30,
+        "Retro": "--",
+        "Combust": "--",
+        "Avastha": "--",
+        "House": 1,
+        "Status": "--"
+    }]
+
     # Display Ascendant information
     print(f"{'Planet':<10}{'Sign':<10}{'Sign Lord':<10}{'Nakshatra':<15}{'Naksh Lord':<10}{'Degree':<10}{'Retro':<10}{'Combust':<10}{'Avastha':<10}{'House':<10}{'Status':<10}")
     print(f"{'Ascendant':<10}{asc_sign:<10}{asc_lord:<10}{'--':<15}{'--':<10}{ascendant_degree%30:<10.2f}{'--':<10}{'--':<10}{'--':<10}{'1':<10}{'--':<10}")
 
     # Calculate planetary data
     planetary_data = calculate_planet_positions(jd, ascendant_degree,asc_sign)
+
+    # Combine ascendant and planetary data
+    all_data = ascendant_data + planetary_data
+    # Convert data to DataFrame
+    df = pd.DataFrame(all_data)
+    
+    # Write to Excel starting from the second row (index 1) with a custom header in the first row
+    with pd.ExcelWriter("planetary_positions.xlsx", engine="openpyxl") as writer:
+        # Write the data for "Sheet 1"
+        sheet1_df.to_excel(writer, index=False, sheet_name="Sheet 1")
+        worksheet = writer.sheets['Sheet 1']
+
+
+        # Create a new workbook and get the sheet
+        df.to_excel(writer, index=False, sheet_name="Sheet 2")
+
+        worksheet = writer.sheets['Sheet 2']
+
+         # Merge cells across 6 columns for "Table 1"
+        worksheet.merge_cells(start_row=1, start_column=1, end_row=1, end_column=11)
+
+        worksheet.cell(row=1, column=1, value="Table 1")
+        
+        # Write headers to the second row (index 1) explicitly (this will be from the DataFrame)
+        for col_num, column in enumerate(df.columns, start=1):
+            worksheet.cell(row=2, column=col_num, value=column)
 
     # Display planetary information
     for data in planetary_data:
