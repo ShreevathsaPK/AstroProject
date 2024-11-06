@@ -37,7 +37,7 @@ def query_planet_by_house_or_sign(conn, planet, nakshatra, sign=None):
     return results
 
 def main():
-    # Connect to the database
+    # Connect to the database.
     conn = create_connection('horoscope.db')
 
     

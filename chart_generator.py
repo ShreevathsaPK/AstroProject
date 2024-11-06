@@ -2,6 +2,9 @@ import swisseph as swe
 import datetime
 import os
 import pytz
+from geopy.geocoders import Nominatim
+from timezonefinder import TimezoneFinder
+
 
 os.environ['SWISSEPH_DIR'] = '/workspace/AstroProject/'
 
@@ -28,7 +31,25 @@ def check_combust(planet, planet_degree, sun_degree):
             return "Combust"
     return "No"
 
-def calculate_planet_positions(jd, ascendant_degree):
+def calculate_house(ascendant_sign, planet_sign):
+    # Zodiac signs mapped to numbers
+    signs = {
+        "Aries": 1, "Taurus": 2, "Gemini": 3, "Cancer": 4, "Leo": 5, "Virgo": 6,
+        "Libra": 7, "Scorpio": 8, "Sagittarius": 9, "Capricorn": 10, "Aquarius": 11, "Pisces": 12
+    }
+
+    # Convert signs to numbers
+    asc_num = signs[ascendant_sign]
+    planet_num = signs[planet_sign]
+
+    # Calculate the house
+    house = (planet_num - asc_num + 1) % 12 
+    if house == 0:
+        house = 12  # Adjust for the case where it wraps around
+
+    return house
+
+def calculate_planet_positions(jd, ascendant_degree,asc_sign):
     """Calculate positions for planets, their signs, degrees, retrograde status, and more."""
     planets_data = []
 
@@ -67,7 +88,9 @@ def calculate_planet_positions(jd, ascendant_degree):
         avastha = "Yuva"  # Default example; you may add specific calculations for avastha
 
         # Determine the house relative to the Ascendant
-        house = ((int((degree - ascendant_degree) / 30) - 1) % 12) + 1
+        #house = ((int((degree - ascendant_degree) / 30) - 1) % 12) + 1 old logic buggy.
+        house = calculate_house(asc_sign, sign)
+
 
         # Status placeholder
         status = "--"  # Adjust as needed based on specific conditions
@@ -139,19 +162,50 @@ def calculate_julian_day(year, month, day, hour, minute, second):
     """Calculate Julian Day from date and time."""
     return swe.julday(year, month, day, hour + (minute / 60) + (second / 3600))
 
+
+
+def get_lat_long_from_location(location_name):
+    # Initialize the geolocator
+    geolocator = Nominatim(user_agent="geoapi")
+    location = geolocator.geocode(location_name)
+    
+    # Check if location is found
+    if location:
+        return location.latitude, location.longitude
+    else:
+        print("Location not found. Please enter a valid location.")
+        return None, None
+
+def get_timezone(latitude, longitude):
+    # Initialize the timezone finder
+    tf = TimezoneFinder()
+    timezone_str = tf.timezone_at(lat=latitude, lng=longitude)
+    
+    if timezone_str:
+        return pytz.timezone(timezone_str)
+    else:
+        print("Timezone could not be determined.")
+        return None
+
 def main():
     # Input for date and time of birth
     date_of_birth = input("Enter Date of Birth (YYYY-MM-DD): ")
     time_of_birth = input("Enter Time of Birth (HH:MM:SS): ")
-    latitude = float(input("Enter Place of Birth Latitude: "))
-    longitude = float(input("Enter Place of Birth Longitude: "))
+    location_name = input("Enter Place of Birth (City, Country): ")
+    
+    # Get latitude and longitude from location
+    latitude, longitude = get_lat_long_from_location(location_name)
+    if latitude is None or longitude is None:
+        return  # Exit if location was not found
+
+    # Get timezone based on latitude and longitude
+    local_tz = get_timezone(latitude, longitude)
+    if local_tz is None:
+        return  # Exit if timezone could not be determined
 
     # Parse date and time
     dob = datetime.datetime.strptime(date_of_birth, "%Y-%m-%d")
     tob = datetime.datetime.strptime(time_of_birth, "%H:%M:%S")
-
-    # Define the local timezone (replace 'Asia/Kolkata' with your actual local timezone)
-    local_tz = pytz.timezone('Asia/Kolkata')
     local_dt = local_tz.localize(datetime.datetime.combine(dob, tob.time()))
 
     # Convert to UTC
@@ -159,9 +213,6 @@ def main():
 
     # Calculate Julian Day in UTC
     jd = calculate_julian_day(utc_dt.year, utc_dt.month, utc_dt.day, utc_dt.hour, utc_dt.minute, utc_dt.second)
-
-    # Calculate Julian Day for the given date and time
-    #jd = calculate_julian_day(dob.year, dob.month, dob.day, tob.hour, tob.minute, tob.second)
 
     # Calculate Ascendant
     ascendant_degree = calculate_ascendant(jd, latitude, longitude)
@@ -172,7 +223,7 @@ def main():
     print(f"{'Ascendant':<10}{asc_sign:<10}{asc_lord:<10}{'--':<15}{'--':<10}{ascendant_degree%30:<10.2f}{'--':<10}{'--':<10}{'--':<10}{'1':<10}{'--':<10}")
 
     # Calculate planetary data
-    planetary_data = calculate_planet_positions(jd, ascendant_degree)
+    planetary_data = calculate_planet_positions(jd, ascendant_degree,asc_sign)
 
     # Display planetary information
     for data in planetary_data:
@@ -180,3 +231,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
