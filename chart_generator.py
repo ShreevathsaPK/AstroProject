@@ -103,7 +103,7 @@ def calculate_planet_positions(jd, ascendant_degree,asc_sign):
             "Nakshatra": nakshatra,
             "Naksh Lord": naksh_lord,
             "Degree": degree,
-            "Retro": retrograde,
+            "Retro(R)": retrograde,
             "Combust": combust,
             "Avastha": avastha,
             "House": house,
@@ -245,7 +245,7 @@ def main():
         "Nakshatra": "--",
         "Naksh Lord": "--",
         "Degree": ascendant_degree % 30,
-        "Retro": "--",
+        "Retro(R)": "--",
         "Combust": "--",
         "Avastha": "--",
         "House": 1,
@@ -253,7 +253,7 @@ def main():
     }]
 
     # Display Ascendant information
-    print(f"{'Planet':<10}{'Sign':<10}{'Sign Lord':<10}{'Nakshatra':<15}{'Naksh Lord':<10}{'Degree':<10}{'Retro':<10}{'Combust':<10}{'Avastha':<10}{'House':<10}{'Status':<10}")
+    print(f"{'Planet':<10}{'Sign':<10}{'Sign Lord':<10}{'Nakshatra':<15}{'Naksh Lord':<10}{'Degree':<10}{'Retro(R)':<10}{'Combust':<10}{'Avastha':<10}{'House':<10}{'Status':<10}")
     print(f"{'Ascendant':<10}{asc_sign:<10}{asc_lord:<10}{'--':<15}{'--':<10}{ascendant_degree%30:<10.2f}{'--':<10}{'--':<10}{'--':<10}{'1':<10}{'--':<10}")
 
     # Calculate planetary data
@@ -263,34 +263,48 @@ def main():
     all_data = ascendant_data + planetary_data
     # Convert data to DataFrame
     df = pd.DataFrame(all_data)
+    planetary_data_df =  df.iloc[1:]  # Get all rows after the first as Planet data
+    ascendant_data_df = df.iloc[0:1]  # Get the first row as Ascendant data
     
-    # Write to Excel starting from the second row (index 1) with a custom header in the first row
-    with pd.ExcelWriter("planetary_positions.xlsx", engine="openpyxl") as writer:
+    # Assuming sheet1_df, ascendant_data_df, and planetary_data_df are already defined
 
-       
-        # Write the data for "Sheet 1"
-        sheet1_df.to_excel(writer, index=False, sheet_name="Sheet 1",header=False)
-        worksheet = writer.sheets['Sheet 1']
-        # Merge cells across 6 columns for "Table 1"
-        worksheet.merge_cells(start_row=1, start_column=1, end_row=1, end_column=11)
-        worksheet.cell(row=1, column=1, value="Table 1") 
-
-        # Create a new workbook and get the sheet
-        df.to_excel(writer, index=False, sheet_name="Sheet 2")
-
-        worksheet = writer.sheets['Sheet 2']
-
-        # Merge cells across 6 columns for "Table 1"
-        worksheet.merge_cells(start_row=1, start_column=1, end_row=1, end_column=11)
-        worksheet.cell(row=1, column=1, value="Table 1")
+    with pd.ExcelWriter("nameoftheperson_chartgen.xlsx", engine="openpyxl") as writer:
         
-        # Write headers to the second row (index 1) explicitly (this will be from the DataFrame)
-        for col_num, column in enumerate(df.columns, start=1):
-            worksheet.cell(row=2, column=col_num, value=column)
+        # Write "Sheet 1" data starting from the second row with a title in the first row
+        sheet1_df.to_excel(writer, sheet_name="Sheet 1", index=False, header=False, startrow=1)
+        worksheet1 = writer.sheets['Sheet 1']
+        
+        # Merge cells across 7 columns in the first row for "Table 1" title
+        worksheet1.merge_cells(start_row=1, start_column=1, end_row=1, end_column=7)
+        worksheet1.cell(row=1, column=1, value="Table 1") 
+
+        # Write "Sheet 2" data, leaving space for title and ascendant data
+        worksheet2 = writer.book.create_sheet(title="Sheet 2")
+        
+        # Add a title "Table 1" in the first row, merged across 11 columns
+        worksheet2.merge_cells(start_row=1, start_column=1, end_row=1, end_column=11)
+        worksheet2.cell(row=1, column=1, value="Table 1")
+        ####
+        planetary_headers = list(planetary_data_df.columns)
+        # Write Ascendant headers in row 2
+        for col_idx, header in enumerate(planetary_headers, start=1):
+            worksheet2.cell(row=2, column=col_idx, value=header)
+        ####
+        # Write Ascendant data starting from row 3
+        for col_idx, value in enumerate(ascendant_data_df.iloc[0], start=1):  # Assuming first row contains the ascendant data
+            worksheet2.cell(row=3, column=col_idx, value=value)
+
+        # Write planetary data starting from row 3
+        for row_idx, row in planetary_data_df.iterrows():
+            for col_idx, value in enumerate(row, start=1):
+                worksheet2.cell(row=row_idx + 3, column=col_idx, value=value)
+
+    # Now the file will save automatically upon exiting the context manager
+
 
     # Display planetary information
     for data in planetary_data:
-        print(f"{data['Planet']:<10}{data['Sign']:<10}{data['Sign Lord']:<10}{data['Nakshatra']:<15}{data['Naksh Lord']:<10}{data['Degree']%30:<10.2f}{data['Retro']:<10}{data['Combust']:<10}{data['Avastha']:<10}{data['House']:<10}{data['Status']:<10}")
+        print(f"{data['Planet']:<10}{data['Sign']:<10}{data['Sign Lord']:<10}{data['Nakshatra']:<15}{data['Naksh Lord']:<10}{data['Degree']%30:<10.2f}{data['Retro(R)']:<10}{data['Combust']:<10}{data['Avastha']:<10}{data['House']:<10}{data['Status']:<10}")
 
 if __name__ == "__main__":
     main()

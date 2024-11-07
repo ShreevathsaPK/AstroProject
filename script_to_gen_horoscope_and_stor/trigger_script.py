@@ -6,15 +6,16 @@ def process_excel_files(folder_path):
     # Define CSV filenames
     personal_info_csv = 'personal_info.csv'
     planet_info_csv = 'planet_data.csv'
-
+    
     # Loop through all Excel files in the specified folder
     for filename in os.listdir(folder_path):
-        if filename.endswith('.xls'):
+        print("***DEBUG**")
+        if filename.endswith(('.xls', '.xlsx')):
             excel_file_path = os.path.join(folder_path, filename)
             print("Processing file: {}".format(excel_file_path))
 
             # Read personal info from the first sheet (row-wise format)
-            personal_info_df = pd.read_excel(excel_file_path, sheet_name=1, header=None)
+            personal_info_df = pd.read_excel(excel_file_path, sheet_name="Sheet 1", header=None)
 
             # Drop rows where all values are NaN and filter valid rows
             personal_info_df = personal_info_df.dropna(how='all')
@@ -46,7 +47,7 @@ def process_excel_files(folder_path):
             print("Wrote personal info to {}".format(personal_info_csv))
 
             # Read planetary data from the second sheet
-            planet_info_df = pd.read_excel(excel_file_path, sheet_name=2 , header = 1)
+            planet_info_df = pd.read_excel(excel_file_path, sheet_name="Sheet 2" , header = 1)
             print(planet_info_df)
             # Check if the DataFrame is not empty and contains the expected columns
             if not planet_info_df.empty:
