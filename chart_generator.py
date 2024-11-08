@@ -267,8 +267,8 @@ def main():
     ascendant_data_df = df.iloc[0:1]  # Get the first row as Ascendant data
     
     # Assuming sheet1_df, ascendant_data_df, and planetary_data_df are already defined
-
-    with pd.ExcelWriter("nameoftheperson_chartgen.xlsx", engine="openpyxl") as writer:
+    print("Current Working Directory:", os.getcwd())
+    with pd.ExcelWriter(os.path.join('dummy_datasetpathfornow', f"{name}.xlsx"), engine="openpyxl") as writer:
         
         # Write "Sheet 1" data starting from the second row with a title in the first row
         sheet1_df.to_excel(writer, sheet_name="Sheet 1", index=False, header=False, startrow=1)
