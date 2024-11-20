@@ -1,0 +1,361 @@
+Level,Period,Duration_seconds,Duration_days,Duration_months,Duration_years
+2,Ketu -> Mahadasha_duration_seconds,220903200.0,,,
+2,Ketu -> Mahadasha_duration_days,,2556.75,,
+2,Ketu -> Mahadasha_duration_months,,,83.99310118265439,
+2,Ketu -> Mahadasha_duration_years,,,,7.0
+4,Ketu -> Antardasha -> Ketu -> Duration_seconds,12886020.0,,,
+4,Ketu -> Antardasha -> Ketu -> Duration_days,,149.14375,,
+4,Ketu -> Antardasha -> Ketu -> Duration_months,,,4.899597568988173,
+4,Ketu -> Antardasha -> Ketu -> Duration_years,,,,0.4083333333333333
+4,Ketu -> Antardasha -> Venus -> Duration_seconds,36817200.0,,,
+4,Ketu -> Antardasha -> Venus -> Duration_days,,426.125,,
+4,Ketu -> Antardasha -> Venus -> Duration_months,,,13.998850197109064,
+4,Ketu -> Antardasha -> Venus -> Duration_years,,,,1.1666666666666667
+4,Ketu -> Antardasha -> Sun -> Duration_seconds,11045160.0,,,
+4,Ketu -> Antardasha -> Sun -> Duration_days,,127.8375,,
+4,Ketu -> Antardasha -> Sun -> Duration_months,,,4.199655059132719,
+4,Ketu -> Antardasha -> Sun -> Duration_years,,,,0.35
+4,Ketu -> Antardasha -> Moon -> Duration_seconds,18408600.0,,,
+4,Ketu -> Antardasha -> Moon -> Duration_days,,213.0625,,
+4,Ketu -> Antardasha -> Moon -> Duration_months,,,6.999425098554532,
+4,Ketu -> Antardasha -> Moon -> Duration_years,,,,0.5833333333333334
+4,Ketu -> Antardasha -> Mars -> Duration_seconds,12886020.0,,,
+4,Ketu -> Antardasha -> Mars -> Duration_days,,149.14375,,
+4,Ketu -> Antardasha -> Mars -> Duration_months,,,4.899597568988173,
+4,Ketu -> Antardasha -> Mars -> Duration_years,,,,0.4083333333333333
+4,Ketu -> Antardasha -> Rahu -> Duration_seconds,33135480.0,,,
+4,Ketu -> Antardasha -> Rahu -> Duration_days,,383.5125,,
+4,Ketu -> Antardasha -> Rahu -> Duration_months,,,12.598965177398158,
+4,Ketu -> Antardasha -> Rahu -> Duration_years,,,,1.05
+4,Ketu -> Antardasha -> Jupiter -> Duration_seconds,29453760.0,,,
+4,Ketu -> Antardasha -> Jupiter -> Duration_days,,340.9,,
+4,Ketu -> Antardasha -> Jupiter -> Duration_months,,,11.199080157687252,
+4,Ketu -> Antardasha -> Jupiter -> Duration_years,,,,0.9333333333333333
+4,Ketu -> Antardasha -> Saturn -> Duration_seconds,34976340.0,,,
+4,Ketu -> Antardasha -> Saturn -> Duration_days,,404.81875,,
+4,Ketu -> Antardasha -> Saturn -> Duration_months,,,13.298907687253612,
+4,Ketu -> Antardasha -> Saturn -> Duration_years,,,,1.1083333333333334
+4,Ketu -> Antardasha -> Mercury -> Duration_seconds,31294620.0,,,
+4,Ketu -> Antardasha -> Mercury -> Duration_days,,362.20625,,
+4,Ketu -> Antardasha -> Mercury -> Duration_months,,,11.899022667542704,
+4,Ketu -> Antardasha -> Mercury -> Duration_years,,,,0.9916666666666667
+2,Venus -> Mahadasha_duration_seconds,631152000.0,,,
+2,Venus -> Mahadasha_duration_days,,7305.0,,
+2,Venus -> Mahadasha_duration_months,,,239.98028909329824,
+2,Venus -> Mahadasha_duration_years,,,,20.0
+4,Venus -> Antardasha -> Ketu -> Duration_seconds,36817200.0,,,
+4,Venus -> Antardasha -> Ketu -> Duration_days,,426.125,,
+4,Venus -> Antardasha -> Ketu -> Duration_months,,,13.998850197109064,
+4,Venus -> Antardasha -> Ketu -> Duration_years,,,,1.1666666666666667
+4,Venus -> Antardasha -> Venus -> Duration_seconds,105192000.0,,,
+4,Venus -> Antardasha -> Venus -> Duration_days,,1217.5,,
+4,Venus -> Antardasha -> Venus -> Duration_months,,,39.996714848883045,
+4,Venus -> Antardasha -> Venus -> Duration_years,,,,3.3333333333333335
+4,Venus -> Antardasha -> Sun -> Duration_seconds,31557600.0,,,
+4,Venus -> Antardasha -> Sun -> Duration_days,,365.25,,
+4,Venus -> Antardasha -> Sun -> Duration_months,,,11.999014454664913,
+4,Venus -> Antardasha -> Sun -> Duration_years,,,,1.0
+4,Venus -> Antardasha -> Moon -> Duration_seconds,52596000.0,,,
+4,Venus -> Antardasha -> Moon -> Duration_days,,608.75,,
+4,Venus -> Antardasha -> Moon -> Duration_months,,,19.998357424441522,
+4,Venus -> Antardasha -> Moon -> Duration_years,,,,1.6666666666666667
+4,Venus -> Antardasha -> Mars -> Duration_seconds,36817200.0,,,
+4,Venus -> Antardasha -> Mars -> Duration_days,,426.125,,
+4,Venus -> Antardasha -> Mars -> Duration_months,,,13.998850197109064,
+4,Venus -> Antardasha -> Mars -> Duration_years,,,,1.1666666666666667
+4,Venus -> Antardasha -> Rahu -> Duration_seconds,94672800.0,,,
+4,Venus -> Antardasha -> Rahu -> Duration_days,,1095.75,,
+4,Venus -> Antardasha -> Rahu -> Duration_months,,,35.997043363994734,
+4,Venus -> Antardasha -> Rahu -> Duration_years,,,,3.0
+4,Venus -> Antardasha -> Jupiter -> Duration_seconds,84153600.0,,,
+4,Venus -> Antardasha -> Jupiter -> Duration_days,,974.0,,
+4,Venus -> Antardasha -> Jupiter -> Duration_months,,,31.997371879106435,
+4,Venus -> Antardasha -> Jupiter -> Duration_years,,,,2.6666666666666665
+4,Venus -> Antardasha -> Saturn -> Duration_seconds,99932400.0,,,
+4,Venus -> Antardasha -> Saturn -> Duration_days,,1156.625,,
+4,Venus -> Antardasha -> Saturn -> Duration_months,,,37.99687910643889,
+4,Venus -> Antardasha -> Saturn -> Duration_years,,,,3.1666666666666665
+4,Venus -> Antardasha -> Mercury -> Duration_seconds,89413200.0,,,
+4,Venus -> Antardasha -> Mercury -> Duration_days,,1034.875,,
+4,Venus -> Antardasha -> Mercury -> Duration_months,,,33.99720762155059,
+4,Venus -> Antardasha -> Mercury -> Duration_years,,,,2.8333333333333335
+2,Sun -> Mahadasha_duration_seconds,189345600.0,,,
+2,Sun -> Mahadasha_duration_days,,2191.5,,
+2,Sun -> Mahadasha_duration_months,,,71.99408672798947,
+2,Sun -> Mahadasha_duration_years,,,,6.0
+4,Sun -> Antardasha -> Ketu -> Duration_seconds,11045160.0,,,
+4,Sun -> Antardasha -> Ketu -> Duration_days,,127.8375,,
+4,Sun -> Antardasha -> Ketu -> Duration_months,,,4.199655059132719,
+4,Sun -> Antardasha -> Ketu -> Duration_years,,,,0.35
+4,Sun -> Antardasha -> Venus -> Duration_seconds,31557600.0,,,
+4,Sun -> Antardasha -> Venus -> Duration_days,,365.25,,
+4,Sun -> Antardasha -> Venus -> Duration_months,,,11.999014454664913,
+4,Sun -> Antardasha -> Venus -> Duration_years,,,,1.0
+4,Sun -> Antardasha -> Sun -> Duration_seconds,9467280.0,,,
+4,Sun -> Antardasha -> Sun -> Duration_days,,109.575,,
+4,Sun -> Antardasha -> Sun -> Duration_months,,,3.5997043363994736,
+4,Sun -> Antardasha -> Sun -> Duration_years,,,,0.3
+4,Sun -> Antardasha -> Moon -> Duration_seconds,15778800.0,,,
+4,Sun -> Antardasha -> Moon -> Duration_days,,182.625,,
+4,Sun -> Antardasha -> Moon -> Duration_months,,,5.999507227332456,
+4,Sun -> Antardasha -> Moon -> Duration_years,,,,0.5
+4,Sun -> Antardasha -> Mars -> Duration_seconds,11045160.0,,,
+4,Sun -> Antardasha -> Mars -> Duration_days,,127.8375,,
+4,Sun -> Antardasha -> Mars -> Duration_months,,,4.199655059132719,
+4,Sun -> Antardasha -> Mars -> Duration_years,,,,0.35
+4,Sun -> Antardasha -> Rahu -> Duration_seconds,28401840.0,,,
+4,Sun -> Antardasha -> Rahu -> Duration_days,,328.725,,
+4,Sun -> Antardasha -> Rahu -> Duration_months,,,10.799113009198422,
+4,Sun -> Antardasha -> Rahu -> Duration_years,,,,0.9
+4,Sun -> Antardasha -> Jupiter -> Duration_seconds,25246080.0,,,
+4,Sun -> Antardasha -> Jupiter -> Duration_days,,292.2,,
+4,Sun -> Antardasha -> Jupiter -> Duration_months,,,9.59921156373193,
+4,Sun -> Antardasha -> Jupiter -> Duration_years,,,,0.8
+4,Sun -> Antardasha -> Saturn -> Duration_seconds,29979720.0,,,
+4,Sun -> Antardasha -> Saturn -> Duration_days,,346.9875,,
+4,Sun -> Antardasha -> Saturn -> Duration_months,,,11.399063731931667,
+4,Sun -> Antardasha -> Saturn -> Duration_years,,,,0.95
+4,Sun -> Antardasha -> Mercury -> Duration_seconds,26823960.0,,,
+4,Sun -> Antardasha -> Mercury -> Duration_days,,310.4625,,
+4,Sun -> Antardasha -> Mercury -> Duration_months,,,10.199162286465176,
+4,Sun -> Antardasha -> Mercury -> Duration_years,,,,0.85
+2,Moon -> Mahadasha_duration_seconds,315576000.0,,,
+2,Moon -> Mahadasha_duration_days,,3652.5,,
+2,Moon -> Mahadasha_duration_months,,,119.99014454664912,
+2,Moon -> Mahadasha_duration_years,,,,10.0
+4,Moon -> Antardasha -> Ketu -> Duration_seconds,18408600.0,,,
+4,Moon -> Antardasha -> Ketu -> Duration_days,,213.0625,,
+4,Moon -> Antardasha -> Ketu -> Duration_months,,,6.999425098554532,
+4,Moon -> Antardasha -> Ketu -> Duration_years,,,,0.5833333333333334
+4,Moon -> Antardasha -> Venus -> Duration_seconds,52596000.0,,,
+4,Moon -> Antardasha -> Venus -> Duration_days,,608.75,,
+4,Moon -> Antardasha -> Venus -> Duration_months,,,19.998357424441522,
+4,Moon -> Antardasha -> Venus -> Duration_years,,,,1.6666666666666667
+4,Moon -> Antardasha -> Sun -> Duration_seconds,15778800.0,,,
+4,Moon -> Antardasha -> Sun -> Duration_days,,182.625,,
+4,Moon -> Antardasha -> Sun -> Duration_months,,,5.999507227332456,
+4,Moon -> Antardasha -> Sun -> Duration_years,,,,0.5
+4,Moon -> Antardasha -> Moon -> Duration_seconds,26298000.0,,,
+4,Moon -> Antardasha -> Moon -> Duration_days,,304.375,,
+4,Moon -> Antardasha -> Moon -> Duration_months,,,9.999178712220761,
+4,Moon -> Antardasha -> Moon -> Duration_years,,,,0.8333333333333334
+4,Moon -> Antardasha -> Mars -> Duration_seconds,18408600.0,,,
+4,Moon -> Antardasha -> Mars -> Duration_days,,213.0625,,
+4,Moon -> Antardasha -> Mars -> Duration_months,,,6.999425098554532,
+4,Moon -> Antardasha -> Mars -> Duration_years,,,,0.5833333333333334
+4,Moon -> Antardasha -> Rahu -> Duration_seconds,47336400.0,,,
+4,Moon -> Antardasha -> Rahu -> Duration_days,,547.875,,
+4,Moon -> Antardasha -> Rahu -> Duration_months,,,17.998521681997367,
+4,Moon -> Antardasha -> Rahu -> Duration_years,,,,1.5
+4,Moon -> Antardasha -> Jupiter -> Duration_seconds,42076800.0,,,
+4,Moon -> Antardasha -> Jupiter -> Duration_days,,487.0,,
+4,Moon -> Antardasha -> Jupiter -> Duration_months,,,15.998685939553217,
+4,Moon -> Antardasha -> Jupiter -> Duration_years,,,,1.3333333333333333
+4,Moon -> Antardasha -> Saturn -> Duration_seconds,49966200.0,,,
+4,Moon -> Antardasha -> Saturn -> Duration_days,,578.3125,,
+4,Moon -> Antardasha -> Saturn -> Duration_months,,,18.998439553219445,
+4,Moon -> Antardasha -> Saturn -> Duration_years,,,,1.5833333333333333
+4,Moon -> Antardasha -> Mercury -> Duration_seconds,44706600.0,,,
+4,Moon -> Antardasha -> Mercury -> Duration_days,,517.4375,,
+4,Moon -> Antardasha -> Mercury -> Duration_months,,,16.998603810775293,
+4,Moon -> Antardasha -> Mercury -> Duration_years,,,,1.4166666666666667
+2,Mars -> Mahadasha_duration_seconds,220903200.0,,,
+2,Mars -> Mahadasha_duration_days,,2556.75,,
+2,Mars -> Mahadasha_duration_months,,,83.99310118265439,
+2,Mars -> Mahadasha_duration_years,,,,7.0
+4,Mars -> Antardasha -> Ketu -> Duration_seconds,12886020.0,,,
+4,Mars -> Antardasha -> Ketu -> Duration_days,,149.14375,,
+4,Mars -> Antardasha -> Ketu -> Duration_months,,,4.899597568988173,
+4,Mars -> Antardasha -> Ketu -> Duration_years,,,,0.4083333333333333
+4,Mars -> Antardasha -> Venus -> Duration_seconds,36817200.0,,,
+4,Mars -> Antardasha -> Venus -> Duration_days,,426.125,,
+4,Mars -> Antardasha -> Venus -> Duration_months,,,13.998850197109064,
+4,Mars -> Antardasha -> Venus -> Duration_years,,,,1.1666666666666667
+4,Mars -> Antardasha -> Sun -> Duration_seconds,11045160.0,,,
+4,Mars -> Antardasha -> Sun -> Duration_days,,127.8375,,
+4,Mars -> Antardasha -> Sun -> Duration_months,,,4.199655059132719,
+4,Mars -> Antardasha -> Sun -> Duration_years,,,,0.35
+4,Mars -> Antardasha -> Moon -> Duration_seconds,18408600.0,,,
+4,Mars -> Antardasha -> Moon -> Duration_days,,213.0625,,
+4,Mars -> Antardasha -> Moon -> Duration_months,,,6.999425098554532,
+4,Mars -> Antardasha -> Moon -> Duration_years,,,,0.5833333333333334
+4,Mars -> Antardasha -> Mars -> Duration_seconds,12886020.0,,,
+4,Mars -> Antardasha -> Mars -> Duration_days,,149.14375,,
+4,Mars -> Antardasha -> Mars -> Duration_months,,,4.899597568988173,
+4,Mars -> Antardasha -> Mars -> Duration_years,,,,0.4083333333333333
+4,Mars -> Antardasha -> Rahu -> Duration_seconds,33135480.0,,,
+4,Mars -> Antardasha -> Rahu -> Duration_days,,383.5125,,
+4,Mars -> Antardasha -> Rahu -> Duration_months,,,12.598965177398158,
+4,Mars -> Antardasha -> Rahu -> Duration_years,,,,1.05
+4,Mars -> Antardasha -> Jupiter -> Duration_seconds,29453760.0,,,
+4,Mars -> Antardasha -> Jupiter -> Duration_days,,340.9,,
+4,Mars -> Antardasha -> Jupiter -> Duration_months,,,11.199080157687252,
+4,Mars -> Antardasha -> Jupiter -> Duration_years,,,,0.9333333333333333
+4,Mars -> Antardasha -> Saturn -> Duration_seconds,34976340.0,,,
+4,Mars -> Antardasha -> Saturn -> Duration_days,,404.81875,,
+4,Mars -> Antardasha -> Saturn -> Duration_months,,,13.298907687253612,
+4,Mars -> Antardasha -> Saturn -> Duration_years,,,,1.1083333333333334
+4,Mars -> Antardasha -> Mercury -> Duration_seconds,31294620.0,,,
+4,Mars -> Antardasha -> Mercury -> Duration_days,,362.20625,,
+4,Mars -> Antardasha -> Mercury -> Duration_months,,,11.899022667542704,
+4,Mars -> Antardasha -> Mercury -> Duration_years,,,,0.9916666666666667
+2,Rahu -> Mahadasha_duration_seconds,568036800.0,,,
+2,Rahu -> Mahadasha_duration_days,,6574.5,,
+2,Rahu -> Mahadasha_duration_months,,,215.98226018396844,
+2,Rahu -> Mahadasha_duration_years,,,,18.0
+4,Rahu -> Antardasha -> Ketu -> Duration_seconds,33135480.0,,,
+4,Rahu -> Antardasha -> Ketu -> Duration_days,,383.5125,,
+4,Rahu -> Antardasha -> Ketu -> Duration_months,,,12.598965177398158,
+4,Rahu -> Antardasha -> Ketu -> Duration_years,,,,1.05
+4,Rahu -> Antardasha -> Venus -> Duration_seconds,94672800.0,,,
+4,Rahu -> Antardasha -> Venus -> Duration_days,,1095.75,,
+4,Rahu -> Antardasha -> Venus -> Duration_months,,,35.997043363994734,
+4,Rahu -> Antardasha -> Venus -> Duration_years,,,,3.0
+4,Rahu -> Antardasha -> Sun -> Duration_seconds,28401840.0,,,
+4,Rahu -> Antardasha -> Sun -> Duration_days,,328.725,,
+4,Rahu -> Antardasha -> Sun -> Duration_months,,,10.799113009198422,
+4,Rahu -> Antardasha -> Sun -> Duration_years,,,,0.9
+4,Rahu -> Antardasha -> Moon -> Duration_seconds,47336400.0,,,
+4,Rahu -> Antardasha -> Moon -> Duration_days,,547.875,,
+4,Rahu -> Antardasha -> Moon -> Duration_months,,,17.998521681997367,
+4,Rahu -> Antardasha -> Moon -> Duration_years,,,,1.5
+4,Rahu -> Antardasha -> Mars -> Duration_seconds,33135480.0,,,
+4,Rahu -> Antardasha -> Mars -> Duration_days,,383.5125,,
+4,Rahu -> Antardasha -> Mars -> Duration_months,,,12.598965177398158,
+4,Rahu -> Antardasha -> Mars -> Duration_years,,,,1.05
+4,Rahu -> Antardasha -> Rahu -> Duration_seconds,85205520.0,,,
+4,Rahu -> Antardasha -> Rahu -> Duration_days,,986.175,,
+4,Rahu -> Antardasha -> Rahu -> Duration_months,,,32.397339027595265,
+4,Rahu -> Antardasha -> Rahu -> Duration_years,,,,2.7
+4,Rahu -> Antardasha -> Jupiter -> Duration_seconds,75738240.0,,,
+4,Rahu -> Antardasha -> Jupiter -> Duration_days,,876.6,,
+4,Rahu -> Antardasha -> Jupiter -> Duration_months,,,28.79763469119579,
+4,Rahu -> Antardasha -> Jupiter -> Duration_years,,,,2.4
+4,Rahu -> Antardasha -> Saturn -> Duration_seconds,89939160.0,,,
+4,Rahu -> Antardasha -> Saturn -> Duration_days,,1040.9625,,
+4,Rahu -> Antardasha -> Saturn -> Duration_months,,,34.197191195795,
+4,Rahu -> Antardasha -> Saturn -> Duration_years,,,,2.85
+4,Rahu -> Antardasha -> Mercury -> Duration_seconds,80471880.0,,,
+4,Rahu -> Antardasha -> Mercury -> Duration_days,,931.3875,,
+4,Rahu -> Antardasha -> Mercury -> Duration_months,,,30.597486859395527,
+4,Rahu -> Antardasha -> Mercury -> Duration_years,,,,2.55
+2,Jupiter -> Mahadasha_duration_seconds,504921600.0,,,
+2,Jupiter -> Mahadasha_duration_days,,5844.0,,
+2,Jupiter -> Mahadasha_duration_months,,,191.9842312746386,
+2,Jupiter -> Mahadasha_duration_years,,,,16.0
+4,Jupiter -> Antardasha -> Ketu -> Duration_seconds,29453760.0,,,
+4,Jupiter -> Antardasha -> Ketu -> Duration_days,,340.9,,
+4,Jupiter -> Antardasha -> Ketu -> Duration_months,,,11.199080157687252,
+4,Jupiter -> Antardasha -> Ketu -> Duration_years,,,,0.9333333333333333
+4,Jupiter -> Antardasha -> Venus -> Duration_seconds,84153600.0,,,
+4,Jupiter -> Antardasha -> Venus -> Duration_days,,974.0,,
+4,Jupiter -> Antardasha -> Venus -> Duration_months,,,31.997371879106435,
+4,Jupiter -> Antardasha -> Venus -> Duration_years,,,,2.6666666666666665
+4,Jupiter -> Antardasha -> Sun -> Duration_seconds,25246080.0,,,
+4,Jupiter -> Antardasha -> Sun -> Duration_days,,292.2,,
+4,Jupiter -> Antardasha -> Sun -> Duration_months,,,9.59921156373193,
+4,Jupiter -> Antardasha -> Sun -> Duration_years,,,,0.8
+4,Jupiter -> Antardasha -> Moon -> Duration_seconds,42076800.0,,,
+4,Jupiter -> Antardasha -> Moon -> Duration_days,,487.0,,
+4,Jupiter -> Antardasha -> Moon -> Duration_months,,,15.998685939553217,
+4,Jupiter -> Antardasha -> Moon -> Duration_years,,,,1.3333333333333333
+4,Jupiter -> Antardasha -> Mars -> Duration_seconds,29453760.0,,,
+4,Jupiter -> Antardasha -> Mars -> Duration_days,,340.9,,
+4,Jupiter -> Antardasha -> Mars -> Duration_months,,,11.199080157687252,
+4,Jupiter -> Antardasha -> Mars -> Duration_years,,,,0.9333333333333333
+4,Jupiter -> Antardasha -> Rahu -> Duration_seconds,75738240.0,,,
+4,Jupiter -> Antardasha -> Rahu -> Duration_days,,876.6,,
+4,Jupiter -> Antardasha -> Rahu -> Duration_months,,,28.79763469119579,
+4,Jupiter -> Antardasha -> Rahu -> Duration_years,,,,2.4
+4,Jupiter -> Antardasha -> Jupiter -> Duration_seconds,67322880.0,,,
+4,Jupiter -> Antardasha -> Jupiter -> Duration_days,,779.2,,
+4,Jupiter -> Antardasha -> Jupiter -> Duration_months,,,25.597897503285147,
+4,Jupiter -> Antardasha -> Jupiter -> Duration_years,,,,2.1333333333333333
+4,Jupiter -> Antardasha -> Saturn -> Duration_seconds,79945920.0,,,
+4,Jupiter -> Antardasha -> Saturn -> Duration_days,,925.3,,
+4,Jupiter -> Antardasha -> Saturn -> Duration_months,,,30.39750328515111,
+4,Jupiter -> Antardasha -> Saturn -> Duration_years,,,,2.533333333333333
+4,Jupiter -> Antardasha -> Mercury -> Duration_seconds,71530560.0,,,
+4,Jupiter -> Antardasha -> Mercury -> Duration_days,,827.9,,
+4,Jupiter -> Antardasha -> Mercury -> Duration_months,,,27.197766097240468,
+4,Jupiter -> Antardasha -> Mercury -> Duration_years,,,,2.2666666666666666
+2,Saturn -> Mahadasha_duration_seconds,599594400.0,,,
+2,Saturn -> Mahadasha_duration_days,,6939.75,,
+2,Saturn -> Mahadasha_duration_months,,,227.98127463863332,
+2,Saturn -> Mahadasha_duration_years,,,,19.0
+4,Saturn -> Antardasha -> Ketu -> Duration_seconds,34976340.0,,,
+4,Saturn -> Antardasha -> Ketu -> Duration_days,,404.81875,,
+4,Saturn -> Antardasha -> Ketu -> Duration_months,,,13.298907687253612,
+4,Saturn -> Antardasha -> Ketu -> Duration_years,,,,1.1083333333333334
+4,Saturn -> Antardasha -> Venus -> Duration_seconds,99932400.0,,,
+4,Saturn -> Antardasha -> Venus -> Duration_days,,1156.625,,
+4,Saturn -> Antardasha -> Venus -> Duration_months,,,37.99687910643889,
+4,Saturn -> Antardasha -> Venus -> Duration_years,,,,3.1666666666666665
+4,Saturn -> Antardasha -> Sun -> Duration_seconds,29979720.0,,,
+4,Saturn -> Antardasha -> Sun -> Duration_days,,346.9875,,
+4,Saturn -> Antardasha -> Sun -> Duration_months,,,11.399063731931667,
+4,Saturn -> Antardasha -> Sun -> Duration_years,,,,0.95
+4,Saturn -> Antardasha -> Moon -> Duration_seconds,49966200.0,,,
+4,Saturn -> Antardasha -> Moon -> Duration_days,,578.3125,,
+4,Saturn -> Antardasha -> Moon -> Duration_months,,,18.998439553219445,
+4,Saturn -> Antardasha -> Moon -> Duration_years,,,,1.5833333333333333
+4,Saturn -> Antardasha -> Mars -> Duration_seconds,34976340.0,,,
+4,Saturn -> Antardasha -> Mars -> Duration_days,,404.81875,,
+4,Saturn -> Antardasha -> Mars -> Duration_months,,,13.298907687253612,
+4,Saturn -> Antardasha -> Mars -> Duration_years,,,,1.1083333333333334
+4,Saturn -> Antardasha -> Rahu -> Duration_seconds,89939160.0,,,
+4,Saturn -> Antardasha -> Rahu -> Duration_days,,1040.9625,,
+4,Saturn -> Antardasha -> Rahu -> Duration_months,,,34.197191195795,
+4,Saturn -> Antardasha -> Rahu -> Duration_years,,,,2.85
+4,Saturn -> Antardasha -> Jupiter -> Duration_seconds,79945920.0,,,
+4,Saturn -> Antardasha -> Jupiter -> Duration_days,,925.3,,
+4,Saturn -> Antardasha -> Jupiter -> Duration_months,,,30.39750328515111,
+4,Saturn -> Antardasha -> Jupiter -> Duration_years,,,,2.533333333333333
+4,Saturn -> Antardasha -> Saturn -> Duration_seconds,94935780.0,,,
+4,Saturn -> Antardasha -> Saturn -> Duration_days,,1098.79375,,
+4,Saturn -> Antardasha -> Saturn -> Duration_months,,,36.09703515111695,
+4,Saturn -> Antardasha -> Saturn -> Duration_years,,,,3.0083333333333333
+4,Saturn -> Antardasha -> Mercury -> Duration_seconds,84942540.0,,,
+4,Saturn -> Antardasha -> Mercury -> Duration_days,,983.13125,,
+4,Saturn -> Antardasha -> Mercury -> Duration_months,,,32.29734724047306,
+4,Saturn -> Antardasha -> Mercury -> Duration_years,,,,2.691666666666667
+2,Mercury -> Mahadasha_duration_seconds,536479200.0,,,
+2,Mercury -> Mahadasha_duration_days,,6209.25,,
+2,Mercury -> Mahadasha_duration_months,,,203.98324572930352,
+2,Mercury -> Mahadasha_duration_years,,,,17.0
+4,Mercury -> Antardasha -> Ketu -> Duration_seconds,31294620.0,,,
+4,Mercury -> Antardasha -> Ketu -> Duration_days,,362.20625,,
+4,Mercury -> Antardasha -> Ketu -> Duration_months,,,11.899022667542704,
+4,Mercury -> Antardasha -> Ketu -> Duration_years,,,,0.9916666666666667
+4,Mercury -> Antardasha -> Venus -> Duration_seconds,89413200.0,,,
+4,Mercury -> Antardasha -> Venus -> Duration_days,,1034.875,,
+4,Mercury -> Antardasha -> Venus -> Duration_months,,,33.99720762155059,
+4,Mercury -> Antardasha -> Venus -> Duration_years,,,,2.8333333333333335
+4,Mercury -> Antardasha -> Sun -> Duration_seconds,26823960.0,,,
+4,Mercury -> Antardasha -> Sun -> Duration_days,,310.4625,,
+4,Mercury -> Antardasha -> Sun -> Duration_months,,,10.199162286465176,
+4,Mercury -> Antardasha -> Sun -> Duration_years,,,,0.85
+4,Mercury -> Antardasha -> Moon -> Duration_seconds,44706600.0,,,
+4,Mercury -> Antardasha -> Moon -> Duration_days,,517.4375,,
+4,Mercury -> Antardasha -> Moon -> Duration_months,,,16.998603810775293,
+4,Mercury -> Antardasha -> Moon -> Duration_years,,,,1.4166666666666667
+4,Mercury -> Antardasha -> Mars -> Duration_seconds,31294620.0,,,
+4,Mercury -> Antardasha -> Mars -> Duration_days,,362.20625,,
+4,Mercury -> Antardasha -> Mars -> Duration_months,,,11.899022667542704,
+4,Mercury -> Antardasha -> Mars -> Duration_years,,,,0.9916666666666667
+4,Mercury -> Antardasha -> Rahu -> Duration_seconds,80471880.0,,,
+4,Mercury -> Antardasha -> Rahu -> Duration_days,,931.3875,,
+4,Mercury -> Antardasha -> Rahu -> Duration_months,,,30.597486859395527,
+4,Mercury -> Antardasha -> Rahu -> Duration_years,,,,2.55
+4,Mercury -> Antardasha -> Jupiter -> Duration_seconds,71530560.0,,,
+4,Mercury -> Antardasha -> Jupiter -> Duration_days,,827.9,,
+4,Mercury -> Antardasha -> Jupiter -> Duration_months,,,27.197766097240468,
+4,Mercury -> Antardasha -> Jupiter -> Duration_years,,,,2.2666666666666666
+4,Mercury -> Antardasha -> Saturn -> Duration_seconds,84942540.0,,,
+4,Mercury -> Antardasha -> Saturn -> Duration_days,,983.13125,,
+4,Mercury -> Antardasha -> Saturn -> Duration_months,,,32.29734724047306,
+4,Mercury -> Antardasha -> Saturn -> Duration_years,,,,2.691666666666667
+4,Mercury -> Antardasha -> Mercury -> Duration_seconds,76001220.0,,,
+4,Mercury -> Antardasha -> Mercury -> Duration_days,,879.64375,,
+4,Mercury -> Antardasha -> Mercury -> Duration_months,,,28.897626478318,
+4,Mercury -> Antardasha -> Mercury -> Duration_years,,,,2.408333333333333

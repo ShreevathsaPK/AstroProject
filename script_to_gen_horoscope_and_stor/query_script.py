@@ -49,31 +49,44 @@ def query_planet_by_retrograde(conn, planet, retro_status):
     return results
 
 # Query 3: Search for Planets in the Same Zodiac Sign or House with Personal Info
-def query_planets_in_same_sign_or_house(conn, planets, house=None, sign=None):
+def query_planets_in_same_sign_or_house(conn, planets, house, sign,querymode):
     cursor = conn.cursor()
 
-    if sign:
-        placeholders = ', '.join('?' for _ in planets)
-        query = '''
-            SELECT DISTINCT personal_info.*, planet_data.* 
-            FROM personal_info 
-            JOIN planet_data ON personal_info.id = planet_data.personal_info_id 
-            WHERE planet_data.planet IN ({}) AND planet_data.sign = ?'''.format(placeholders)
-        cursor.execute(query, planets + [sign])  # Use list for concatenation
-    elif house:
-        placeholders = ', '.join('?' for _ in planets)
-        query = '''
-            SELECT DISTINCT personal_info.*, planet_data.* 
-            FROM personal_info 
-            JOIN planet_data ON personal_info.id = planet_data.personal_info_id 
-            WHERE planet_data.planet IN ({}) AND planet_data.house = ?'''.format(placeholders)
-        cursor.execute(query, planets + [house])  # Use list for concatenation
-    else:
-        print("Please provide either house or sign for search.")
+    # Validate input mode
+    if not house and not sign:
+        print("Please provide either a house or a sign for search.")
         return []
 
+    # Build the SQL query
+    placeholders = ', '.join('?' for _ in planets)
+    if querymode==1:
+        query = f'''
+            SELECT personal_info.*, planet_data.house, planet_data.sign
+            FROM personal_info
+            JOIN planet_data ON personal_info.id = planet_data.personal_info_id
+            WHERE planet_data.sign = ?
+              AND planet_data.planet IN ({placeholders})
+            GROUP BY personal_info.id, planet_data.house, planet_data.sign
+            HAVING COUNT(DISTINCT planet_data.planet) = ?
+        '''
+        params = [sign] + planets + [len(planets)]
+    else:
+        query = f'''
+            SELECT personal_info.*, planet_data.house, planet_data.sign
+            FROM personal_info
+            JOIN planet_data ON personal_info.id = planet_data.personal_info_id
+            WHERE planet_data.house = ?
+              AND planet_data.planet IN ({placeholders})
+            GROUP BY personal_info.id, planet_data.house, planet_data.sign
+            HAVING COUNT(DISTINCT planet_data.planet) = ?
+        '''
+        params = [house] + planets + [len(planets)]
+
+    # Execute query
+    cursor.execute(query, params)
     results = cursor.fetchall()
     return results
+
 
 # Query 4: Identify lord of xth house and check if it sits in the yth house
 # Modify the function to handle multiple lords for xth house sign
@@ -112,38 +125,47 @@ def query_xth_lord_in_yth_house(conn, xth_house, yth_house):
 def main():
     # Connect to the database
     conn = create_connection('horoscope.db')
+    while(1):
+        # Query 1: Planet with House or Sign
+        planet = input('Enter the Planet: ')
+        house = input('Enter the House: ')
+        zodiac = input('Enter the Zodiac: ')
+        print("Query 1: Results for {} in house {}".format(planet, house))
+        results = query_planet_by_house_or_sign(conn, planet, house=house)
+        for result in results:
+            print(result[1])
 
-    # Query 1: Planet with House or Sign
-    planet = input('Enter the Planet: ')
-    house = input('Enter the House: ')
-    zodiac = input('Enter the Zodiac: ')
-    print("Query 1: Results for {} in house {}".format(planet, house))
-    results = query_planet_by_house_or_sign(conn, planet, house=house)
-    for result in results:
-        print(result[1])
+        print("Query 1: Results for {} in zodiac {}".format(planet, zodiac))
+        results = query_planet_by_house_or_sign(conn, planet, sign=zodiac)
+        for result in results:
+            print(result[1])
 
-    print("Query 1: Results for {} in zodiac {}".format(planet, zodiac))
-    results = query_planet_by_house_or_sign(conn, planet, sign=zodiac)
-    for result in results:
-        print(result[1])
+        # Query 2: Planet with Retrograde Status
+        planet = input('Enter the Planet for Retro: ')
+        retro_status = 'Retro'
+        print("\nQuery 2: Results for {} with retrograde status {}".format(planet, retro_status))
+        results = query_planet_by_retrograde(conn, planet, retro_status)
+        for result in results:
+            print(result[1])
 
-    # Query 2: Planet with Retrograde Status
-    planet = input('Enter the Planet for Retro: ')
-    retro_status = 'Retro'
-    print("\nQuery 2: Results for {} with retrograde status {}".format(planet, retro_status))
-    results = query_planet_by_retrograde(conn, planet, retro_status)
-    for result in results:
-        print(result[1])
+        #Query 3:multiple planets in one house
+        planet_array = input("Query 3:Enter list of planets that you want to see for conjunction").split()
+        house = input("Provide house")
+        sign = input("Provide Sign")
+        query_mode = input("Enter 1 for house mode 2 for sign mode")
+        results = query_planets_in_same_sign_or_house(conn,planet_array,house,sign,query_mode)
+        for result in results:
+            print(result[1])
 
-    # Query 4: Identify xth lord in yth house
-    xth_house = int(input('Enter the xth House: '))
-    yth_house = int(input('Enter the yth House: '))
-    print("\nQuery 4: Checking if lord of {}th house is in {}th house...".format(xth_house, yth_house))
-    results = query_xth_lord_in_yth_house(conn, xth_house, yth_house)
+        # Query 4: Identify xth lord in yth house
+        xth_house = int(input('Enter the xth House: '))
+        yth_house = int(input('Enter the yth House: '))
+        print("\nQuery 4: Checking if lord of {}th house is in {}th house...".format(xth_house, yth_house))
+        results = query_xth_lord_in_yth_house(conn, xth_house, yth_house)
 
-    print("\nTotal Matches Found:", len(results))
-    for result in results:
-        print(result[1])
+        print("\nTotal Matches Found:", len(results))
+        for result in results:
+            print(result[1])
 
     # Close the connection.
     conn.close()
