@@ -63,6 +63,8 @@ def calculate_planet_positions(jd, ascendant_degree,asc_sign):
 
         # Adjust degree for Rahu (mean node) and Ketu (true node)
         if swe.get_planet_name(planet) == "true Node":
+            # again calculate mean node and from that derive ketu degree for precision.don't direclty use true node.
+            degree = swe.calc_ut(jd, swe.MEAN_NODE, swe.FLG_SIDEREAL | swe.FLG_SPEED)[0][0]
             degree = (degree + 180) % 360
 
         # Check retrograde status if the tuple has sufficient length
