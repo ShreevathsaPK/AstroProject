@@ -4,7 +4,7 @@ import os
 import pytz
 from geopy.geocoders import Nominatim
 from timezonefinder import TimezoneFinder
-
+import pandas as pd  # Import pandas to work with Excel files
 
 os.environ['SWISSEPH_DIR'] = '/workspace/AstroProject/'
 
@@ -63,6 +63,8 @@ def calculate_planet_positions(jd, ascendant_degree,asc_sign):
 
         # Adjust degree for Rahu (mean node) and Ketu (true node)
         if swe.get_planet_name(planet) == "true Node":
+            # again calculate mean node and from that derive ketu degree for precision.don't direclty use true node.
+            degree = swe.calc_ut(jd, swe.MEAN_NODE, swe.FLG_SIDEREAL | swe.FLG_SPEED)[0][0]
             degree = (degree + 180) % 360
 
         # Check retrograde status if the tuple has sufficient length
@@ -103,7 +105,7 @@ def calculate_planet_positions(jd, ascendant_degree,asc_sign):
             "Nakshatra": nakshatra,
             "Naksh Lord": naksh_lord,
             "Degree": degree,
-            "Retro": retrograde,
+            "Retro(R)": retrograde,
             "Combust": combust,
             "Avastha": avastha,
             "House": house,
@@ -189,6 +191,7 @@ def get_timezone(latitude, longitude):
 
 def main():
     # Input for date and time of birth
+    name = input("Enter name of the Person")
     date_of_birth = input("Enter Date of Birth (YYYY-MM-DD): ")
     time_of_birth = input("Enter Time of Birth (HH:MM:SS): ")
     location_name = input("Enter Place of Birth (City, Country): ")
@@ -218,16 +221,92 @@ def main():
     ascendant_degree = calculate_ascendant(jd, latitude, longitude)
     asc_sign, asc_lord = get_sign_and_lord(ascendant_degree)
 
+    # Information to be added to "Sheet 1"
+    sheet1_data = {
+        "Name": name,
+        "Date": dob.strftime("%d/%m/%Y"),
+        "Time": tob.strftime("%H:%M:%S"),
+        "Place": location_name,
+        "Latitude": latitude,
+        "Longitude": longitude,
+        "Timezone": local_tz,
+        "Sunrise": "tobefilled",
+        "Sunset": "tobefilled",
+        "Ayanamsha": "tobefilled"
+    }
+
+    # Convert to DataFrame to write into Excel
+    sheet1_df = pd.DataFrame(list(sheet1_data.items()))
+
+
+    # Prepare ascendant data for DataFrame
+    ascendant_data = [{
+        "Planet": "Ascendant",
+        "Sign": asc_sign,
+        "Sign Lord": asc_lord,
+        "Nakshatra": get_nakshatra(ascendant_degree)[0],
+        "Naksh Lord": get_nakshatra(ascendant_degree)[1],
+        "Degree": ascendant_degree % 30,
+        "Retro(R)": "Direct",
+        "Combust": "--",
+        "Avastha": "--",
+        "House": 1,
+        "Status": "--"
+    }]
+
     # Display Ascendant information
-    print(f"{'Planet':<10}{'Sign':<10}{'Sign Lord':<10}{'Nakshatra':<15}{'Naksh Lord':<10}{'Degree':<10}{'Retro':<10}{'Combust':<10}{'Avastha':<10}{'House':<10}{'Status':<10}")
+    print(f"{'Planet':<10}{'Sign':<10}{'Sign Lord':<10}{'Nakshatra':<15}{'Naksh Lord':<10}{'Degree':<10}{'Retro(R)':<10}{'Combust':<10}{'Avastha':<10}{'House':<10}{'Status':<10}")
     print(f"{'Ascendant':<10}{asc_sign:<10}{asc_lord:<10}{'--':<15}{'--':<10}{ascendant_degree%30:<10.2f}{'--':<10}{'--':<10}{'--':<10}{'1':<10}{'--':<10}")
 
     # Calculate planetary data
     planetary_data = calculate_planet_positions(jd, ascendant_degree,asc_sign)
 
+    # Combine ascendant and planetary data
+    all_data = ascendant_data + planetary_data
+    # Convert data to DataFrame
+    df = pd.DataFrame(all_data)
+    planetary_data_df =  df.iloc[1:]  # Get all rows after the first as Planet data
+    ascendant_data_df = df.iloc[0:1]  # Get the first row as Ascendant data
+    
+    # Assuming sheet1_df, ascendant_data_df, and planetary_data_df are already defined
+    print("Current Working Directory:", os.getcwd())
+    with pd.ExcelWriter(os.path.join('dummy_datasetpathfornow', f"{name}.xlsx"), engine="openpyxl") as writer:
+        
+        # Write "Sheet 1" data starting from the second row with a title in the first row
+        sheet1_df.to_excel(writer, sheet_name="Sheet 1", index=False, header=False, startrow=1)
+        worksheet1 = writer.sheets['Sheet 1']
+        
+        # Merge cells across 7 columns in the first row for "Table 1" title
+        worksheet1.merge_cells(start_row=1, start_column=1, end_row=1, end_column=7)
+        worksheet1.cell(row=1, column=1, value="Table 1") 
+
+        # Write "Sheet 2" data, leaving space for title and ascendant data
+        worksheet2 = writer.book.create_sheet(title="Sheet 2")
+        
+        # Add a title "Table 1" in the first row, merged across 11 columns
+        worksheet2.merge_cells(start_row=1, start_column=1, end_row=1, end_column=11)
+        worksheet2.cell(row=1, column=1, value="Table 1")
+        ####
+        planetary_headers = list(planetary_data_df.columns)
+        # Write Ascendant headers in row 2
+        for col_idx, header in enumerate(planetary_headers, start=1):
+            worksheet2.cell(row=2, column=col_idx, value=header)
+        ####
+        # Write Ascendant data starting from row 3
+        for col_idx, value in enumerate(ascendant_data_df.iloc[0], start=1):  # Assuming first row contains the ascendant data
+            worksheet2.cell(row=3, column=col_idx, value=value)
+
+        # Write planetary data starting from row 3
+        for row_idx, row in planetary_data_df.iterrows():
+            for col_idx, value in enumerate(row, start=1):
+                worksheet2.cell(row=row_idx + 3, column=col_idx, value=value)
+
+    # Now the file will save automatically upon exiting the context manager
+
+
     # Display planetary information
     for data in planetary_data:
-        print(f"{data['Planet']:<10}{data['Sign']:<10}{data['Sign Lord']:<10}{data['Nakshatra']:<15}{data['Naksh Lord']:<10}{data['Degree']%30:<10.2f}{data['Retro']:<10}{data['Combust']:<10}{data['Avastha']:<10}{data['House']:<10}{data['Status']:<10}")
+        print(f"{data['Planet']:<10}{data['Sign']:<10}{data['Sign Lord']:<10}{data['Nakshatra']:<15}{data['Naksh Lord']:<10}{data['Degree']%30:<10.2f}{data['Retro(R)']:<10}{data['Combust']:<10}{data['Avastha']:<10}{data['House']:<10}{data['Status']:<10}")
 
 if __name__ == "__main__":
     main()
