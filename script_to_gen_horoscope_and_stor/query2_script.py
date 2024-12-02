@@ -43,7 +43,9 @@ def main():
     
     # Query 1: Planet with House or Sign
     planet = input('Enter the Planet: ')
-    nakshatra = input('Enter the Nakshatra: ')
+    
+    print();
+    nakshatra = input('Enter the Nakshatra in index: ')
     print("Query 1: Results for {} in house {}".format(planet, nakshatra))
     results = query_planet_by_house_or_sign(conn, planet, nakshatra=nakshatra)
     for result in results:
