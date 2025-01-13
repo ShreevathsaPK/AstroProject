@@ -1,14 +1,16 @@
 Planet,Sign,Sign Lord,Nakshatra,Naksh Lord,Degree,Retro(R),Combust,Avastha,House,Status
-Ascendant,Virgo,Mercury,Uttara Phalguni,Sun,6∘12′14″,Direct,No,--,1,--
-Sun,Taurus,Venus,Rohini,Moon,14∘55′45″,Direct,No,Yuva,9,Enemy
-Moon,Virgo,Mercury,Uttara Phalguni,Sun,5∘54′41″,Direct,No,Mrita,1,--
-Mercury,Gemini,Mercury,Mrigashirsha,Mars,4∘47′29″,Direct,No,Bala,10,Owned
-Venus,Aries,Mars,Bharani,Venus,19∘47′49″,Direct,No,Vriddha,8,Friendly
-Mars,Gemini,Mercury,Aadra,Rahu,9∘35′15″,Direct,No,Kumara,10,Enemy
-Jupiter,Cancer,Moon,Pushya,Saturn,4∘12′44″,Direct,No,Mrita,11,Exalted
-Saturn,Libra,Venus,Vishakha,Jupiter,23∘6′36″,Retro,No,Vriddha,2,Exalted
-Rahu,Sagittarius,Jupiter,Mula,Ketu,4∘16′35″,Retro,No,Bala,4,--
-Ketu,Gemini,Mercury,Mrigashirsha,Mars,4∘16′35″,Retro,No,Bala,10,--
-Neptune,Libra,Venus,Chitra,Mars,2∘35′58″,Direct,No,Bala,2,--
-Uranus,Cancer,Moon,Punarvasu,Jupiter,1∘48′34″,Direct,No,Mrita,11,--
-Pluto,Leo,Sun,Magha,Ketu,1∘11′39″,Direct,No,Bala,12,--
+Ascendant,Taurus,Venus,Mrigashirsha,Mars,28∘43′14″,Direct,No,--,1.0,--
+Sun,Gemini,Mercury,Mrigashirsha,Mars,0∘39′24″,Direct,No,Bala,2.0,Friendly
+Moon,Cancer,Moon,Ashlesha,Mercury,19∘53′13″,Direct,No,Kumara,3.0,Mooltrikona
+Mercury,Taurus,Venus,Mrigashirsha,Mars,29∘11′56″,Direct,Yes,Bala,1.0,Friendly
+Venus,Cancer,Moon,Pushya,Saturn,15∘59′41″,Direct,No,Yuva,3.0,Enemy
+Mars,Cancer,Moon,Ashlesha,Mercury,18∘22′52″,Direct,No,Kumara,3.0,Debilitated
+Jupiter,Cancer,Moon,Ashlesha,Mercury,17∘47′52″,Direct,No,Yuva,3.0,Exalted
+Saturn,Capricorn,Saturn,Shravana,Moon,12∘24′3″,Retro,No,Yuva,9.0,Owned
+Rahu,Sagittarius,Jupiter,Purva Ashadha,Venus,26∘36′3″,Retro,No,Mrita,8.0,--
+Ketu,Gemini,Mercury,Punarvasu,Jupiter,26∘36′3″,Retro,No,Mrita,2.0,--
+Neptune,Sagittarius,Jupiter,Purva Ashadha,Venus,22∘12′53″,Direct,No,Vriddha,8.0,--
+Uranus,Sagittarius,Jupiter,Purva Ashadha,Venus,18∘48′33″,Direct,No,Vriddha,8.0,--
+Pluto,Libra,Venus,Vishakha,Jupiter,24∘18′9″,Direct,No,Mrita,6.0,--
+"
+",,,,,,,,,,
