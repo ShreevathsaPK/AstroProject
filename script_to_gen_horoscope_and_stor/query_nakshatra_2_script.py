@@ -92,7 +92,7 @@ def cal_house_lrd(naksh_lord, ascendant_identified):
     # Get the signs ruled by the Nakshatra lord
     ruled_signs = planet_house_mapping.get(naksh_lord)
     if not ruled_signs:
-        return f"Invalid Nakshatra lord: '{naksh_lord}'. Please check the input."
+        return [-1,-1]
 
     # Find the position of the ascendant in the zodiac
     try:
@@ -101,37 +101,19 @@ def cal_house_lrd(naksh_lord, ascendant_identified):
         return f"Invalid ascendant: '{ascendant_identified}'. Please check the input."
 
     # Map each zodiac sign to a house number based on the ascendant
+    ######NOT E: BELOW LOGIC IS TRASH BUT ITS WORKING FINE. DONT TRY TO COMPREHEND #####
     houses = {}
     for i in range(12):
-        house_number = (i - ascendant_index + 12 +3) % 12 + 1  #3 is some correction factor
+        house_number = (i - ascendant_index + 12 ) % 12 + 1  #3 is some correction factor
+        #print(f"house_number {house_number}")
         houses[zodiac_signs[i]] = house_number
-    print(houses)
+    #print(houses)
     # Determine the houses ruled by the Nakshatra lord
+    #print(f"ruled_signs {ruled_signs[0]} number {houses[ruled_signs[0]]} ")
     ruled_houses = sorted([houses[sign] for sign in ruled_signs])
 
     return ruled_houses
 
-
-def cal_naksh_lrd(nakshatra_que):
-    """
-    Calculate the lord of the given Nakshatra.
-
-    Parameters:
-        nakshatra_que (str): The name of the Nakshatra.
-
-    Returns:
-        str: The lord of the Nakshatra or an error message if not found.
-    """
-    # Normalize the input to match keys in the mapping
-    nakshatra_que = nakshatra_que.strip().title()
-    
-    # Get the Nakshatra lord
-    lord = nakshatra_lords.get(nakshatra_que)
-    
-    if lord:
-        return lord
-    else:
-        return f"Nakshatra '{nakshatra_que}' not found in the mapping!"
 
 
 def obtain_nakshatra_from_code(number):
@@ -177,7 +159,7 @@ def query_lord_in_nakshatra(conn, lord, nakshatra):
         print(f"Database query error: {e}")
         return []
 
-def calculate_which_lord_is_in_tht_naks(conn,nakshatra_que,personal_id):
+def calculate_which_lord_is_in_tht_naks(conn,planet,personal_id):
     cursor = conn.cursor()
     
     try:
@@ -190,13 +172,16 @@ def calculate_which_lord_is_in_tht_naks(conn,nakshatra_que,personal_id):
 
     ascendant_identified = cursor.fetchall()
     #print(ascendant_identified[0][0])
-    naksh_lord = cal_naksh_lrd(nakshatra_que)
-    house_lrd = cal_house_lrd(naksh_lord,ascendant_identified[0][0])
+    #naksh_lord = cal_naksh_lrd(nakshatra_que)  DEL
+    house_lrd = cal_house_lrd(planet,ascendant_identified[0][0])
     #print(f"house lrd {house_lrd}")
     return house_lrd
 
 def main():
     db_file = 'horoscope.db'
+    conditional_check_flg = int(input("Do u want conditional check? give 1"))
+    conditional_house_number = input("If yes give conditional house")
+
     conn = create_connection(db_file)
     if not conn:
         print("Failed to connect to the database. Exiting.")
@@ -207,55 +192,35 @@ def main():
         print(f"{idx}: {name}")
     
     # Query 1: Find planets in a Nakshatra
-    try:
-        nakshatra_code = int(input('\nEnter Nakshatra index (1-27): '))
-        nakshatra = obtain_nakshatra_from_code(nakshatra_code)
-        if not nakshatra:
-            print("Invalid Nakshatra index! Please enter a number between 1 and 27.")
-            return
 
-        print(f"\nPlanets in Nakshatra {nakshatra}:")
-        results = query_planets_in_nakshatra(conn, nakshatra)
-        if results:
-            for result in results:
-                lord_of_house=calculate_which_lord_is_in_tht_naks(conn,result[2],result[1])
-                #print(f"Lord of the following houses :{lord_of_house}")
-                print(f"Name: {result[0]} Planet : {result[3]} Lord : {lord_of_house} ")  # Adjust formatting based on actual data
-
-        else:
-            print(f"No planets found in Nakshatra {nakshatra}.")
-        
-    except ValueError:
-        print("Invalid input! Please enter a valid number.")
+    nakshatra_code = int(input('\nEnter Nakshatra index (1-27): '))
+    nakshatra = obtain_nakshatra_from_code(nakshatra_code)
+    if not nakshatra:
+        print("Invalid Nakshatra index! Please enter a number between 1 and 27.")
         return
 
-    # Query 2: Find specific lords in a Nakshatra
-    try:
-        lord = input('\nEnter the Lord (e.g., Mars, Venus, etc.): ').strip()
-        if not lord:
-            print("Lord input cannot be empty!")
-            return
+    print(f"\nPlanets in Nakshatra {nakshatra}:")
+    results = query_planets_in_nakshatra(conn, nakshatra)
+    if results:
+        for result in results:
+            lord_of_house=calculate_which_lord_is_in_tht_naks(conn,result[3],result[1])
+            #print(f"Lord of the following houses :{lord_of_house}")
+            #print(f"lord of house {lord_of_house} conditional_house_number {conditional_house_number}")
+            
+            another_flg = False
+            for _ in lord_of_house:
+                #print(lord_of_house)
+                if(int(conditional_house_number)==int(_)):
+                    another_flg =True
 
-        nakshatra_for_lord_code = int(input('Enter Nakshatra index for the Lord (1-27): '))
-        nakshatra_for_lord = obtain_nakshatra_from_code(nakshatra_for_lord_code)
-        if not nakshatra_for_lord:
-            print("Invalid Nakshatra index! Please enter a number between 1 and 27.")
-            return
+            if conditional_check_flg==0 or another_flg :
+                print(f"Name: {result[0]} Planet : {result[3]} Lord : {lord_of_house} ")  # Adjust formatting based on actual data
 
-        # Map co-lord to primary lord if applicable
-        lord = co_lords.get(nakshatra_for_lord, lord)
+    else:
+        print(f"No planets found in Nakshatra {nakshatra}.")
+    
 
-        print(f"\nPlanets ruled by {lord} in Nakshatra {nakshatra_for_lord}:")
-        lord_results = query_lord_in_nakshatra(conn, lord, nakshatra_for_lord)
-        if lord_results:
-            for planet, house_lord in lord_results:
-                print(f"Planet: {planet}, House Lordship: {house_lord}")
-        else:
-            print(f"No planets ruled by {lord} found in Nakshatra {nakshatra_for_lord}.")
-    except ValueError:
-        print("Invalid input! Please enter a valid number.")
-    finally:
-        conn.close()
+    conn.close()
 
 if __name__ == "__main__":
     main()
