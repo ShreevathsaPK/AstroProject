@@ -163,25 +163,52 @@ results_dict =[]
 if all_people:
     for person in all_people:
         name, dob, tob, latitude, longitude, tz_offset = person
-        print(dob)
-        print(tob)
+        #print(dob)
+        #print(tob)
         converted_datetime = convert_datetime(dob, tob)
         dob = converted_datetime[:10]
         tob = converted_datetime[11:]
 
         tz_offset = convert_timezone(tz_offset)
         
-        print(f"tddd {tz_offset}")
+       #print(f"tddd {tz_offset}")
+        # kNOTE DID N"T USE THE TIMEZONE OFFSET VALUE COZ IT WAS GIVING WRONG VALUES SO THIS IS APPLICABLE TO ONLY INDIA LOCATION
         result = calculate_tithi_vara_yoga_nakshatra(dob, tob, latitude, longitude, 5.5)
-        print(f"Results for {name}: {result}")
+        #print(f"Results for {name}: {result}")
         results_dict.append([name,result])
 else:
     print("No records found in the database.")
 
-print(results_dict)
-for k in results_dict:
-    if(k[1]['Tithi']=='Chaturdashi'):
-        print(k)
-
-
+print('''
+    1. Tithi Search
+    2. Vaar Search
+    3. Yoga Search
+    4. Karan Search #Yet to be implemented
+    5. Nakshatra Search
+''')
+s_key = int(input("search mode"))
+if(s_key == 1):
+    print(TITHIS)
+    tithi_selection = input("Enter tithi to search")
+    for k in results_dict:
+        if(k[1]['Tithi']==tithi_selection):
+            print(k)
+if(s_key == 2):
+    print(VARS)
+    var_selection = input("Enter Var to search")
+    for k in results_dict:
+        if(k[1]['Vara']==var_selection):
+            print(k)
+if(s_key == 3):
+    print(YOGAS)
+    yoga_selection = input("Enter Yoga to search")
+    for k in results_dict:
+        if(k[1]['Yoga']==yoga_selection):
+            print(k)
+if(s_key == 5):
+    print(NAKSHATRAS)
+    naks_selection = input("Enter Nakshatra to search")
+    for k in results_dict:
+        if(k[1]['Nakshatra']==naks_selection):
+            print(k)
 print(calculate_tithi_vara_yoga_nakshatra('2000-02-21', '10:34:38', latitude, longitude, 5.5))
