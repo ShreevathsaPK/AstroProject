@@ -192,7 +192,7 @@ if(s_key == 1):
     tithi_selection = input("Enter tithi to search")
     for k in results_dict:
         if(k[1]['Tithi']==tithi_selection):
-            print(k)
+            print(k[0])
 if(s_key == 2):
     print(VARS)
     var_selection = input("Enter Var to search")
@@ -204,7 +204,7 @@ if(s_key == 3):
     yoga_selection = input("Enter Yoga to search")
     for k in results_dict:
         if(k[1]['Yoga']==yoga_selection):
-            print(k)
+            print(k[0])
 if(s_key == 5):
     print(NAKSHATRAS)
     naks_selection = input("Enter Nakshatra to search")
