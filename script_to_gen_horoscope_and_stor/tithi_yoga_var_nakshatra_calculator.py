@@ -84,6 +84,39 @@ YOGAS = [
     "Brahma", "Indra", "Vaidhriti"
 ]
 
+# Define Karans (7 rotating + 4 fixed)
+KARANS = [
+    "Bava", "Balava", "Kaulava", "Taitila", "Garaja", "Vanija", "Vishti",
+    "Bava", "Balava", "Kaulava", "Taitila", "Garaja", "Vanija", "Vishti",
+    "Bava", "Balava", "Kaulava", "Taitila", "Garaja", "Vanija", "Vishti",
+    "Bava", "Balava", "Kaulava", "Taitila", "Garaja", "Vanija", "Vishti",
+    "Bava", "Balava", "Kaulava", "Taitila", "Garaja", "Vanija", "Vishti",
+    "Bava", "Balava", "Kaulava", "Taitila", "Garaja", "Vanija", "Vishti",
+    "Bava", "Balava", "Kaulava", "Taitila", "Garaja", "Vanija", "Vishti",
+    "Shakuni", "Chatushpad", "Nagava", "Kinstughna"
+]
+
+def get_karana(moon_deg, sun_deg):
+    # Define Karana cycle (First 28 Tithis repeat this cycle)
+    REPEATING_KARANAS = ["Bava", "Balava", "Kaulava", "Taitila", "Garaja", "Vanija", "Vishti"]
+    FIXED_KARANAS = ["Shakuni", "Chatushpad", "Nagava", "Kimstughna"]
+    
+    # Calculate Sun-Moon angle difference (Δθ)
+    delta_deg = (moon_deg - sun_deg) % 360
+    
+    # Get Tithi number (1 to 30)
+    tithi = int(delta_deg // 12) + 1
+    
+    # Each Tithi has 2 Karanas (Except last two Tithis)
+    karana_half = int((delta_deg % 12) // 6)  # 0 for first half, 1 for second half
+    
+    # Choose Karana based on Tithi
+    if tithi <= 28:
+        karana_index = ((tithi-1) * 2 + karana_half -1) % 7  # Repeat every 7
+        return REPEATING_KARANAS[karana_index]
+    else:
+        return FIXED_KARANAS[tithi - 29 + karana_half]  # Fetch from fixed Karanas
+
 # Lahiri Ayanamsha (approximate, dynamically varies with time)
 def get_lahiri_ayanamsha(year):
     return 23.85  # This should ideally be calculated dynamically
@@ -135,12 +168,20 @@ def calculate_tithi_vara_yoga_nakshatra(dob, tob, latitude, longitude, tz_offset
     yoga_index = math.floor(((sun_lon + moon_lon) % 360) / (360 / 27))
     yoga = YOGAS[yoga_index]
 
+    # MODIFIED: Calculate Karan
+    
+    karan = get_karana(moon_lon,sun_lon)
+
+    #karan_index = int(((moon_lon - sun_lon) % 360) / 6) % len(KARANS)
+    #karan = KARANS[karan_index]
+
     # Return result
     return {
         "Tithi": tithi,
         "Vara": vara,
         "Nakshatra": nakshatra,
-        "Yoga": yoga
+        "Yoga": yoga,
+        "Karan": karan  # MODIFIED: Added Karan
     }
 
 # Function to fetch all personal info from the database
@@ -183,7 +224,7 @@ print('''
     1. Tithi Search
     2. Vaar Search
     3. Yoga Search
-    4. Karan Search #Yet to be implemented
+    4. Karan Search 
     5. Nakshatra Search
 ''')
 s_key = int(input("search mode"))
@@ -204,6 +245,12 @@ if(s_key == 3):
     yoga_selection = input("Enter Yoga to search")
     for k in results_dict:
         if(k[1]['Yoga']==yoga_selection):
+            print(k[0])
+if (s_key == 4):
+    print(KARANS)
+    karan_selection = input("Enter Karan to search: ")
+    for k in results_dict:
+        if k[1]['Karan'] == karan_selection:
             print(k[0])
 if(s_key == 5):
     print(NAKSHATRAS)
