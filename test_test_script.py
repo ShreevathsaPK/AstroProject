@@ -72,4 +72,4 @@ Vivek Trambadita
 M Anjana Bhat'''
     
     # Assert that the output is correct
-    #assert result.stdout.strip() == expected_output
+    assert result.stdout.strip() == 34
