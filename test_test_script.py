@@ -7,7 +7,7 @@ def test_process_inputs():
     
     # Run the script using subprocess and feed inputs
     result = subprocess.run(
-        ["python3", "test_script.py"],  # Adjust this if your script is in a different location
+        ["python3", "\script_to_gen_horoscope_and_stor\query_script.py"],  # Adjust this if your script is in a different location
         input=input_data,              # Feeding the inputs
         text=True,                     # Treat input and output as text
         capture_output=True            # Capture the output
