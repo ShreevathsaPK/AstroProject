@@ -14,7 +14,62 @@ def test_process_inputs():
     )
     
     # Expected output
-    expected_output = "Processed 1 Mars 7 Aries"
+    expected_output = '''Query 1: Results for Mars in house 7
+Vedartham Bharath
+Charitha
+Nandeesh
+Bhargava K Bhat
+Divya Bhat
+Shreelakshmi Sangam Cousin
+Kaushal Friend Sec
+Pk Holla Dad
+Pk Holla Dad
+Goutham Kaushal Friend
+Soumyashree K Holla
+Medha Tent
+Vedartham_Bharath
+Vivek Trambadita
+Manasa Ms Identified Scorpio asc bymyself
+Shreya P B
+Vedartham Bharath
+Charitha
+Nandeesh
+Bhargava K Bhat
+Divya Bhat
+Sanketh Thotadur Holla
+Shreelakshmi Sangam Cousin
+Kaushal Friend Sec
+Pk Holla Dad
+Pk Holla Dad
+Goutham Kaushal Friend
+Soumyashree K Holla
+Medha Tent
+Vedartham_Bharath
+Vivek Trambadita
+Manasa Ms Identified Scorpio asc bymyself
+Shreya P B
+Query 1: Results for Mars in zodiac Aries
+Shwetha B S
+Suhana Mbrdi
+Charitha
+Prajnashri Achar
+Vikas Soni
+Suraj Thanush Freind
+Chirag Aditya
+Vinitha V
+Vivek Trambadita
+M Anjana Bhat
+Shwetha B S
+Suhana Mbrdi
+Charitha
+Prajnashri Achar
+Vikas Soni
+Suraj Thanush Freind
+Chirag Aditya
+Niveditha Nitin Friend
+Vinitha V
+Vivek Trambadita
+M Anjana Bhat'''
     
     # Assert that the output is correct
     assert result.stdout.strip() == expected_output
