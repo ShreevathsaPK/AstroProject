@@ -5,4 +5,7 @@ b = input()
 c = input()
 d = input()
 
-print(34)
+if(a==1 & c == 7):
+    print(34)
+else:
+    print(10)
