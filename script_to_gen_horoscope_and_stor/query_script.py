@@ -202,6 +202,8 @@ def main():
             for result in results:
                 print(f"Name: {result[1]}, House: {result[-1]}")  # Adjust result indices based on your table structure
 
+        break
+
 
     # Close the connection.
     conn.close()
