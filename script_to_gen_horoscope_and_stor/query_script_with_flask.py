@@ -139,7 +139,9 @@ def api_query1():
     rows = query_planet_by_house_or_sign(conn, planet, house, sign)
     conn.close()
 
-    return jsonify([dict(row) for row in rows])
+    result = [row['name'] for row in rows]
+    print(result)
+    return str(result)
 
 @app.route("/query2")
 def api_query2():
@@ -147,8 +149,10 @@ def api_query2():
     conn = create_connection()
     rows = query_planet_by_retrograde(conn, planet, "Retro")
     conn.close()
-
-    return jsonify([dict(row) for row in rows])
+    
+    result = [row[1] for row in rows]  # your final output
+    print(result)  # terminal
+    return str(result)   # browser shows only this
 
 @app.route("/query3")
 def api_query3():
@@ -161,7 +165,9 @@ def api_query3():
     rows = query_planets_in_same_sign_or_house(conn, planets, house, sign, mode)
     conn.close()
 
-    return jsonify([dict(row) for row in rows])
+    result = [row['name'] for row in rows]
+    print(result)
+    return str(result)
 
 @app.route("/query4")
 def api_query4():
@@ -172,7 +178,9 @@ def api_query4():
     rows = query_xth_lord_in_yth_house(conn, x, y)
     conn.close()
 
-    return jsonify([dict(row) for row in rows])
+    result = [row['name'] for row in rows]
+    print(result)
+    return str(result)
 
 @app.route("/query5")
 def api_query5():
@@ -180,9 +188,10 @@ def api_query5():
     conn = create_connection()
     rows = query_planets_in_conjunction(conn, planets)
     conn.close()
-
-    return jsonify([dict(row) for row in rows])
+    result = [row['name'] for row in rows]
+    print(result)
+    return str(result)
 
 # ------------------- Start Flask -------------------
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=80)
+    app.run(host="0.0.0.0", port=5009)
