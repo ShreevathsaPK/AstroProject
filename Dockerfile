@@ -1,7 +1,6 @@
 # Use official Python image
 FROM python:3.6.15-slim
 
-
 # Set working directory
 WORKDIR /app
 
@@ -11,22 +10,14 @@ COPY requirements.txt .
 # Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy everything from build context (Astro_Projects/)
+# Copy entire project
 COPY . .
-
 
 # Expose port Flask will run on
 EXPOSE 5009
 
-# # Install dependencies
-# RUN pip install --no-cache-dir -r requirements.txt
+# Make run.sh executable (if it exists)
+RUN chmod +x run.sh || true
 
-# Make run.sh executable
-RUN chmod +x run.sh
-
-# Optional: install dependencies later
-# COPY requirements.txt .
-# RUN pip install --no-cache-dir -r requirements.txt
-
-# Default command
-CMD ["./run.sh"]
+# Run the Flask app
+CMD ["python", "script_to_gen_horoscope_and_stor/query_script_with_flask.py"]

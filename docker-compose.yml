@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  astro-app:
+    build: .
+    container_name: astroproject-flask
+    ports:
+      - "5009:5009"
+    environment:
+      - SECRET_KEY=${SECRET_KEY:-your-secret-key-change-in-production}
+      - DATABASE_URL=${DATABASE_URL:-sqlite:///horoscope.db}
+      - FLASK_ENV=development
+    volumes:
+      - .:/app
+    networks:
+      - astro-network
+
+networks:
+  astro-network:
+    driver: bridge
