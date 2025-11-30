@@ -1,379 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AstroProject - Login / Signup</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AstroProject</title>
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .container {
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 400px;
-            padding: 40px;
-        }
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg,#667eea,#764ba2);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-            font-size: 28px;
-        }
+.container {
+    background: #fff;
+    width: 420px;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
 
-        .form-group {
-            margin-bottom: 20px;
-        }
+h1, h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: #555;
-            font-weight: 500;
-        }
+label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
 
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: border-color 0.3s;
-        }
+input, select, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
 
-        input[type="text"]:focus,
-        input[type="password"]:focus {
-            outline: none;
-            border-color: #667eea;
-        }
+button {
+    background: #667eea;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
 
-        .button-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 25px;
-        }
+button:hover {
+    background: #5568d3;
+}
 
-        button {
-            flex: 1;
-            padding: 12px;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
+.row {
+    display: flex;
+    gap: 10px;
+}
 
-        .btn-login {
-            background: #667eea;
-            color: white;
-        }
+.message {
+    margin-top: 10px;
+    padding: 10px;
+    display: none;
+    text-align: center;
+    border-radius: 5px;
+}
 
-        .btn-login:hover {
-            background: #5568d3;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
+.message.success { background: #d4edda; color: #155724; display:block; }
+.message.error   { background: #f8d7da; color: #721c24; display:block; }
 
-        .btn-signup {
-            background: #f5f5f5;
-            color: #333;
-            border: 2px solid #ddd;
-        }
+#tokenBox {
+    display:none;
+    background:#f9f9f9;
+    padding:10px;
+    margin-top:10px;
+    word-break: break-all;
+    font-size: 12px;
+}
 
-        .btn-signup:hover {
-            background: #efefef;
-            border-color: #667eea;
-        }
+#querySection {
+    display:none;
+    margin-top: 20px;
+    border-top: 2px solid #ddd;
+    padding-top: 15px;
+}
 
-        .message {
-            margin-top: 20px;
-            padding: 12px;
-            border-radius: 5px;
-            display: none;
-            text-align: center;
-            font-weight: 500;
-        }
+.query-card {
+    background:#f5f5f5;
+    padding:10px;
+    margin-top:10px;
+    border-radius:6px;
+}
 
-        .message.success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-            display: block;
-        }
-
-        .message.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-            display: block;
-        }
-
-        .message.info {
-            background: #d1ecf1;
-            color: #0c5460;
-            border: 1px solid #bee5eb;
-            display: block;
-        }
-
-        .token-display {
-            margin-top: 20px;
-            padding: 15px;
-            background: #f9f9f9;
-            border-radius: 5px;
-            display: none;
-        }
-
-        .token-display h3 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-
-        .token-display pre {
-            background: #fff;
-            padding: 10px;
-            border-radius: 3px;
-            overflow-x: auto;
-            font-size: 12px;
-            border: 1px solid #ddd;
-            word-break: break-all;
-        }
-
-        .copy-btn {
-            background: #667eea;
-            color: white;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 3px;
-            font-size: 12px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .copy-btn:hover {
-            background: #5568d3;
-        }
-
-        .query-section {
-            margin-top: 30px;
-            padding-top: 30px;
-            border-top: 2px solid #ddd;
-            display: none;
-        }
-
-        .query-section h2 {
-            color: #333;
-            margin-bottom: 15px;
-            font-size: 18px;
-        }
-
-        .query-item {
-            margin-bottom: 15px;
-            padding: 10px;
-            background: #f9f9f9;
-            border-radius: 5px;
-        }
-
-        .query-item button {
-            width: 100%;
-            padding: 10px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 3px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .query-item button:hover {
-            background: #5568d3;
-        }
-    </style>
+#queryResult {
+    margin-top:10px;
+    background:#fff;
+    padding:10px;
+    border-radius:5px;
+    font-size:14px;
+}
+</style>
 </head>
+
 <body>
-    <div class="container">
-        <h1>🌟 AstroProject</h1>
+<div class="container">
 
-        <form id="authForm">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" placeholder="Enter username" required>
-            </div>
+<h1>🌟 AstroProject</h1>
 
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Enter password" required>
-            </div>
+<!-- AUTH -->
+<label>Username</label>
+<input id="username">
 
-            <div class="button-group">
-                <button type="button" class="btn-login" onclick="handleLogin()">Login</button>
-                <button type="button" class="btn-signup" onclick="handleSignup()">Sign Up</button>
-            </div>
-        </form>
+<label>Password</label>
+<input type="password" id="password">
 
-        <div id="message" class="message"></div>
+<div class="row" style="margin-top:12px;">
+    <button onclick="signup()">Sign Up</button>
+    <button onclick="login()">Login</button>
+</div>
 
-        <div id="tokenDisplay" class="token-display">
-            <h3>Your JWT Token:</h3>
-            <pre id="tokenText"></pre>
-            <button class="copy-btn" onclick="copyToken()">Copy Token</button>
-        </div>
+<div id="msg" class="message"></div>
 
-        <div id="querySection" class="query-section">
-            <h2>Sample Queries</h2>
-            <div class="query-item">
-                <button onclick="runQuery('query1', 'planet=Mars&house=1')">Query 1: Mars in House 1</button>
-            </div>
-            <div class="query-item">
-                <button onclick="runQuery('query2', 'planet=Mercury')">Query 2: Retrograde Mercury</button>
-            </div>
-            <div class="query-item">
-                <button onclick="runQuery('query3', 'planets=Mars,Venus&sign=Aries&mode=1')">Query 3: Mars & Venus in Aries</button>
-            </div>
-            <div class="query-item">
-                <button onclick="runQuery('query4', 'x=5&y=9')">Query 4: 5th Lord in 9th House</button>
-            </div>
-            <div class="query-item">
-                <button onclick="runQuery('query5', 'planets=Mars,Jupiter')">Query 5: Mars & Jupiter Conjunction</button>
-            </div>
-            <div style="margin-top: 15px; padding: 10px; background: #f0f0f0; border-radius: 5px;">
-                <p id="queryResult" style="font-size: 14px; color: #333;"></p>
-            </div>
-        </div>
-    </div>
+<div id="tokenBox"></div>
 
-    <script>
-        let currentToken = null;
-        const API_URL = 'http://127.0.0.1:5009';
+<!-- QUERY SECTION -->
+<div id="querySection">
 
-        function showMessage(text, type) {
-            const msgDiv = document.getElementById('message');
-            msgDiv.textContent = text;
-            msgDiv.className = `message ${type}`;
-            setTimeout(() => {
-                msgDiv.className = 'message';
-            }, 5000);
-        }
+<h2>Astrology Queries</h2>
 
-        async function handleSignup() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+<div class="query-card">
+    <b>Query 1: Planet in House / Sign</b>
+    <input id="q1Planet" placeholder="Planet (Mars)">
+    <input id="q1House" placeholder="House (1)">
+    <input id="q1Sign" placeholder="Sign (Aries)">
+    <button onclick="q1()">Run</button>
+</div>
 
-            if (!username || !password) {
-                showMessage('Username and password required!', 'error');
-                return;
-            }
+<div class="query-card">
+    <b>Query 2: Retrograde Planet</b>
+    <input id="q2Planet" placeholder="Planet (Mercury)">
+    <button onclick="q2()">Run</button>
+</div>
 
-            try {
-                const response = await fetch(`${API_URL}/signup`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password })
-                });
+<div class="query-card">
+    <b>Query 3: Same Sign / House</b>
+    <input id="q3Planets" placeholder="Planets (Mars,Venus)">
+    <input id="q3Sign" placeholder="Sign (Aries)">
+    <input id="q3House" placeholder="House (5)">
+    <select id="q3Mode">
+        <option value="1">Same Sign</option>
+        <option value="2">Same House</option>
+    </select>
+    <button onclick="q3()">Run</button>
+</div>
 
-                const data = await response.json();
+<div class="query-card">
+    <b>Query 4: Xth Lord in Yth House</b>
+    <input id="q4X" placeholder="X (House)">
+    <input id="q4Y" placeholder="Y (House)">
+    <button onclick="q4()">Run</button>
+</div>
 
-                if (response.ok) {
-                    showMessage(`✓ Account created! Now login with your credentials.`, 'success');
-                    document.getElementById('username').value = '';
-                    document.getElementById('password').value = '';
-                } else {
-                    showMessage(`✗ ${data.error}`, 'error');
-                }
-            } catch (error) {
-                showMessage(`Error: ${error.message}`, 'error');
-            }
-        }
+<div class="query-card">
+    <b>Query 5: Planet Conjunction</b>
+    <input id="q5Planets" placeholder="Planets (Mars,Jupiter)">
+    <button onclick="q5()">Run</button>
+</div>
 
-        async function handleLogin() {
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+<div id="queryResult"></div>
+</div>
 
-            if (!username || !password) {
-                showMessage('Username and password required!', 'error');
-                return;
-            }
+</div>
 
-            try {
-                const response = await fetch(`${API_URL}/login`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password })
-                });
+<script>
+const API = window.location.origin;
+let token = null;
 
-                const data = await response.json();
+function show(msg, type) {
+    const m = document.getElementById("msg");
+    m.textContent = msg;
+    m.className = "message " + type;
+}
 
-                if (response.ok) {
-                    currentToken = data.token;
-                    showMessage(`✓ Login successful! Welcome, ${data.user.username}`, 'success');
-                    
-                    // Display token
-                    document.getElementById('tokenText').textContent = data.token;
-                    document.getElementById('tokenDisplay').style.display = 'block';
-                    
-                    // Show query section
-                    document.getElementById('querySection').style.display = 'block';
-                    
-                    // Disable login form
-                    document.getElementById('authForm').style.opacity = '0.5';
-                    document.getElementById('authForm').style.pointerEvents = 'none';
-                } else {
-                    showMessage(`✗ ${data.error}`, 'error');
-                }
-            } catch (error) {
-                showMessage(`Error: ${error.message}`, 'error');
-            }
-        }
+async function signup() {
+    const u = username.value, p = password.value;
+    if(!u||!p) return show("Username & password required","error");
 
-        function copyToken() {
-            const token = document.getElementById('tokenText').textContent;
-            navigator.clipboard.writeText(token).then(() => {
-                showMessage('✓ Token copied to clipboard!', 'success');
-            });
-        }
+    const r = await fetch(`${API}/signup`,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({username:u,password:p})
+    });
+    const d = await r.json();
+    r.ok ? show("User created. Please login.","success") : show(d.error,"error");
+}
 
-        async function runQuery(endpoint, params) {
-            if (!currentToken) {
-                showMessage('Please login first!', 'error');
-                return;
-            }
+async function login() {
+    const r = await fetch(`${API}/login`,{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({username:username.value,password:password.value})
+    });
+    const d = await r.json();
+    if(!r.ok) return show(d.error,"error");
 
-            try {
-                const response = await fetch(`${API_URL}/${endpoint}?${params}`, {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${currentToken}`
-                    }
-                });
+    token = d.token;
+    tokenBox.style.display="block";
+    tokenBox.textContent = token;
+    querySection.style.display="block";
+    show("Login successful","success");
+}
 
-                const data = await response.text();
+async function call(endpoint, params) {
+    const r = await fetch(`${API}/${endpoint}?${params}`,{
+        headers:{Authorization:`Bearer ${token}`}
+    });
+    queryResult.textContent = await r.text();
+}
 
-                if (response.ok) {
-                    document.getElementById('queryResult').innerHTML = `<strong>Result:</strong> ${data}`;
-                } else {
-                    document.getElementById('queryResult').innerHTML = `<strong style="color: red;">Error:</strong> ${data}`;
-                }
-            } catch (error) {
-                document.getElementById('queryResult').innerHTML = `<strong style="color: red;">Error:</strong> ${error.message}`;
-            }
-        }
-    </script>
+function q1() {
+    let p=`planet=${q1Planet.value}`;
+    if(q1House.value) p+=`&house=${q1House.value}`;
+    if(q1Sign.value) p+=`&sign=${q1Sign.value}`;
+    call("query1",p);
+}
+function q2(){ call("query2",`planet=${q2Planet.value}`); }
+function q3(){
+    let p=`planets=${q3Planets.value}&mode=${q3Mode.value}`;
+    if(q3Sign.value) p+=`&sign=${q3Sign.value}`;
+    if(q3House.value) p+=`&house=${q3House.value}`;
+    call("query3",p);
+}
+function q4(){ call("query4",`x=${q4X.value}&y=${q4Y.value}`); }
+function q5(){ call("query5",`planets=${q5Planets.value}`); }
+</script>
 </body>
 </html>
